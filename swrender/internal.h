@@ -243,7 +243,7 @@ if((y)<(x)){\
 
 //#include "libm.h"
 
-#if !HAVE_LLRINT
+/*#if !HAVE_LLRINT
 static long long llrint(double x)
 {
 	char* buf;

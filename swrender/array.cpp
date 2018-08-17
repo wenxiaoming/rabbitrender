@@ -14,6 +14,7 @@
 ** limitations under the License.
 */
 
+#include <windows.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -683,7 +684,7 @@ static void drawPrimitivesTriangleFanOrStrip(ogles_context_t* c,
                 const uint32_t cc = v0->flags & v1->flags & v2->flags;
                 if (ggl_likely(!(cc & vertex_t::CLIP_ALL)))
                     c->prims.renderTriangle(c, v0, v1, v2);
-                swap(((winding^=1) ? v1 : v0), v2);
+                android::gl::swap(((winding^=1) ? v1 : v0), v2);
                 num--;
             } while (num);
         }

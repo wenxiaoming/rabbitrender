@@ -15,6 +15,7 @@
 ** limitations under the License.
 */
 
+#include <windows.h>
 #include <stdlib.h>
 
 #define NOCRYPT //Kevin.Wen:fix compile issue
