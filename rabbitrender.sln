@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rabbitrender", "rabbitrender\rabbitrender.vcproj", "{9086C37E-FAF2-473A-B70F-D4C181A280AD}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libpixelflinger", "libpixelflinger\libpixelflinger.vcproj", "{6F6E6E56-0D83-4201-8E76-CCD3C4299A8F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "swrender", "swrender\swrender.vcproj", "{58561DCB-43F5-4335-821B-7F1EC1086374}"
@@ -32,12 +30,6 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9086C37E-FAF2-473A-B70F-D4C181A280AD}.Debug|Win32.ActiveCfg = Debug|Win32
-		{9086C37E-FAF2-473A-B70F-D4C181A280AD}.Debug|Win32.Build.0 = Debug|Win32
-		{9086C37E-FAF2-473A-B70F-D4C181A280AD}.Debug|x64.ActiveCfg = Debug|Win32
-		{9086C37E-FAF2-473A-B70F-D4C181A280AD}.Release|Win32.ActiveCfg = Release|Win32
-		{9086C37E-FAF2-473A-B70F-D4C181A280AD}.Release|Win32.Build.0 = Release|Win32
-		{9086C37E-FAF2-473A-B70F-D4C181A280AD}.Release|x64.ActiveCfg = Release|Win32
 		{6F6E6E56-0D83-4201-8E76-CCD3C4299A8F}.Debug|Win32.ActiveCfg = Debug|Win32
 		{6F6E6E56-0D83-4201-8E76-CCD3C4299A8F}.Debug|Win32.Build.0 = Debug|Win32
 		{6F6E6E56-0D83-4201-8E76-CCD3C4299A8F}.Debug|x64.ActiveCfg = Debug|x64

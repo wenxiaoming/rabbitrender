@@ -23,6 +23,7 @@ static ESContext* mESContext = NULL;
 #define FIXED_ONE 0x10000
 #define ITERATIONS 50
 
+#define CLIP_DEMO
 //#define SUPPORT_WIREFRAME
 int init_gl_surface(void);
 void free_gl_surface(void);
@@ -362,7 +363,25 @@ void render(void* esContext)
     glClearColor(1.0, 1.0, 1.0, 1.0);
     int nelem = sizeof(indices)/sizeof(indices[0]);
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-    
+
+#ifdef CLIP_DEMO
+
+	GLfloat planeTop[]    = {0.0f, -1.0f, 0.0f, 480};
+	GLfloat planeBottom[] = {0.0f, 1.0f, 0.0f, 0.0f};
+	GLfloat planeLeft[]   = {1.0f, 0.0f, 0.0f, 0.0f};
+	GLfloat planeRight[]  = {-1.0f, 0.0f, 0.0f, 320};
+
+	glClipPlanef(GL_CLIP_PLANE0, planeTop);
+	glClipPlanef(GL_CLIP_PLANE1, planeBottom);
+	glClipPlanef(GL_CLIP_PLANE2, planeLeft);
+	glClipPlanef(GL_CLIP_PLANE3, planeRight);
+	glEnable(GL_CLIP_PLANE0);
+	glEnable(GL_CLIP_PLANE1);
+	glEnable(GL_CLIP_PLANE2);
+	glEnable(GL_CLIP_PLANE3);
+
+#endif
+
 #ifdef SUPPORT_WIREFRAME
 	for(int i = 0; i < nelem; i += 3)
 		glDrawArrays(GL_LINE_LOOP, i, 3);
