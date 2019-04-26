@@ -366,19 +366,14 @@ void render(void* esContext)
 
 #ifdef CLIP_DEMO
 
-	GLfloat planeTop[]    = {0.0f, -1.0f, 0.0f, 480};
 	GLfloat planeBottom[] = {0.0f, 1.0f, 0.0f, 0.0f};
 	GLfloat planeLeft[]   = {1.0f, 0.0f, 0.0f, 0.0f};
-	GLfloat planeRight[]  = {-1.0f, 0.0f, 0.0f, 320};
 
-	glClipPlanef(GL_CLIP_PLANE0, planeTop);
 	glClipPlanef(GL_CLIP_PLANE1, planeBottom);
 	glClipPlanef(GL_CLIP_PLANE2, planeLeft);
-	glClipPlanef(GL_CLIP_PLANE3, planeRight);
-	glEnable(GL_CLIP_PLANE0);
+
 	glEnable(GL_CLIP_PLANE1);
 	glEnable(GL_CLIP_PLANE2);
-	glEnable(GL_CLIP_PLANE3);
 
 #endif
 
