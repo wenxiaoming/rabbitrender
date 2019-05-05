@@ -3,10 +3,13 @@ rabbitrender is pure software implementation of graphics pipeline, includes prog
 
 please open the sln file with visual studio then build it successfully.
 
-there are two test samples, here is the snapshot of running the two test samples.
+there are three test samples, here are the snapshots of running the three test samples.
 
 gl_basic
 ![gl_basic](https://github.com/wenxiaoming/rabbitrender/blob/master/screenshots/gl_basic.png)
 
 particle
 ![particle](https://github.com/wenxiaoming/rabbitrender/blob/master/screenshots/particle.png)
+
+cube
+![cube](https://github.com/wenxiaoming/rabbitrender/blob/master/screenshots/cube.png)
