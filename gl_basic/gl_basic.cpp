@@ -23,7 +23,7 @@ static ESContext* mESContext = NULL;
 #define FIXED_ONE 0x10000
 #define ITERATIONS 50
 
-#define CLIP_DEMO
+//#define CLIP_DEMO
 //#define SUPPORT_WIREFRAME
 int init_gl_surface(void);
 void free_gl_surface(void);
@@ -296,7 +296,7 @@ void free_gl_surface(void)
 void init_scene(void)
 {
     glDisable(GL_DITHER);
-    glEnable(GL_CULL_FACE);
+    //glEnable(GL_CULL_FACE);
     float ratio = 320.0f / 480.0f;
     glViewport(0, 0, 320, 480);
     glMatrixMode(GL_PROJECTION);
@@ -316,22 +316,16 @@ void init_scene(void)
 void create_texture(void)
 {
     const unsigned int on = 0xff0000ff;
-    const unsigned int off = 0xffffffff;
+    const unsigned int off = 0x00ff0000;
     const unsigned int pixels[] =
     {
-            on, off, on, off, on, off, on, off,
-            off, on, off, on, off, on, off, on,
-            on, off, on, off, on, off, on, off,
-            off, on, off, on, off, on, off, on,
-            on, off, on, off, on, off, on, off,
-            off, on, off, on, off, on, off, on,
-            on, off, on, off, on, off, on, off,
-            off, on, off, on, off, on, off, on,
+            on, off, 
+            off, on
     };
 
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 8, 8, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 4, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
     glTexParameterx(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameterx(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexEnvx(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
@@ -343,10 +337,10 @@ void render(void* esContext)
     int quads = 1;
 
     const GLfloat vertices[] = {
-            -1,  -1,  0,
-             1,  -1,  0,
-             1,   1,  0,
-            -1,   1,  0
+            -1,  -1,  -1,
+             1,  -1,  -1,
+             1,   1,  -1,
+            -1,   1,  -1
     };
 
     const GLfixed texCoords[] = {
