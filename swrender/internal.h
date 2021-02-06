@@ -260,6 +260,7 @@ static long long llrint(double x)
 }
 #endif /* HAVE_LLRINT */
 
+#ifdef _MSC_VER
 #if !HAVE_LRINT
 static av_always_inline av_const long int lrint(double x)
 {
@@ -309,6 +310,8 @@ static av_always_inline av_const float truncf(float x)
     return (x > 0) ? floor(x) : ceil(x);
 }
 #endif /* HAVE_TRUNCF */
+
+#endif
 
 /**
  * Returns NULL if CONFIG_SMALL is true, otherwise the argument

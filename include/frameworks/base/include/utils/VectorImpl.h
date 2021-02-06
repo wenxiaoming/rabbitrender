@@ -53,7 +53,7 @@ public:
     /*! must be called from subclasses destructor */
             void            finish_vector();
 
-            VectorImpl&     operator = (const VectorImpl& rhs);    
+            VectorImpl&     operator = (const VectorImpl& rhs); 
             
     /*! C-style array access */
     inline  const void*     arrayImpl() const       { return mStorage; }

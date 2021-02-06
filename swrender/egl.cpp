@@ -49,7 +49,6 @@
 #undef NELEM
 #define NELEM(x) (sizeof(x)/sizeof(*(x)))
 
-
 EGLBoolean EGLAPI eglSetSwapRectangleANDROID(EGLDisplay dpy, EGLSurface draw,
         EGLint left, EGLint top, EGLint width, EGLint height);
 
@@ -84,7 +83,7 @@ static T setError(GLint error, T returnValue) {
 static GLint getError() {
     if (ggl_unlikely(gEGLErrorKey == ((pthread_key_t)-1)))
         return EGL_SUCCESS;
-    GLint error = (GLint)pthread_getspecific(gEGLErrorKey);
+    GLint error = (uintptr_t)pthread_getspecific(gEGLErrorKey);
     if (error == 0) {
         // The TLS key has been created by another thread, but the value for
         // this thread has not been initialized.
@@ -253,10 +252,10 @@ private:
         inline Rect(int32_t l, int32_t t, int32_t r, int32_t b)
             : left(l), top(t), right(r), bottom(b) { }
         Rect& andSelf(const Rect& r) {
-            left   = max(left, r.left);
-            top    = max(top, r.top);
-            right  = min(right, r.right);
-            bottom = min(bottom, r.bottom);
+            left   = fmax(left, r.left);
+            top    = fmax(top, r.top);
+            right  = fmin(right, r.right);
+            bottom = fmin(bottom, r.bottom);
             return *this;
         }
         bool isEmpty() const {
@@ -288,8 +287,8 @@ private:
                     storage->bottom = rhs.top;
                     storage++;
                 }
-                const int32_t top = max(lhs.top, rhs.top);
-                const int32_t bot = min(lhs.bottom, rhs.bottom);
+                const int32_t top = fmax(lhs.top, rhs.top);
+                const int32_t bot = fmin(lhs.bottom, rhs.bottom);
                 if (top < bot) {
                     if (lhs.left < rhs.left) { // left-side rect
                         storage->left   = lhs.left;
@@ -1162,7 +1161,7 @@ static EGLBoolean getConfigAttrib(EGLDisplay dpy, EGLConfig config,
         EGLint attribute, EGLint *value)
 {
     size_t numConfigs =  NELEM(gConfigs);
-    int index = (int)config;
+    int index = (uintptr_t)config;
     if (uint32_t(index) >= numConfigs)
         return setError(EGL_BAD_CONFIG, EGL_FALSE);
 

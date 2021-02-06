@@ -19,7 +19,7 @@
 #define ANDROID_FB_INTERFACE_H
 
 #include <stdint.h>
-#include <hardware/cdefs.h>
+//#include <hardware/cdefs.h>
 #include <sys/types.h>
 
 #include <cutils/native_handle.h>

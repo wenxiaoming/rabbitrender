@@ -22,6 +22,37 @@
 #include <ui/PixelFormat.h>
 #include <EGL/egl.h>
 
+#include <stdint.h>
+
+#ifndef _MSC_VER
+#include <sys/types.h>
+#endif
+
+#ifndef _MSC_VER
+#include <SDL2/SDL.h>
+#endif
+
+typedef struct  _ESContext
+{
+#ifdef _MSC_VER
+        HWND hwnd;
+#else
+	SDL_Window *window = NULL;
+#endif
+	void* context;
+	void (*drawFunc) ( void* );
+
+	_ESContext():window(NULL),
+                 context(NULL),
+                 drawFunc(NULL)
+	{
+
+	}
+} ESContext;
+
+
+//typedef int         status_t;
+//typedef int32_t PixelFormat;
 
 // ----------------------------------------------------------------------------
 namespace android {

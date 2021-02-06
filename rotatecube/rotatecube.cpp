@@ -1,4 +1,12 @@
+#include <stdint.h>
+
+#ifndef _MSC_VER
+#include <sys/types.h>
+#endif
+
+#ifdef _MSC_VER
 #include <windows.h>
+#endif
 #include <EGL/egl.h>
 
 #include <GLES/gl.h>
@@ -9,6 +17,10 @@
 
 #include <stdlib.h>
 #include <math.h>
+
+#ifndef _MSC_VER
+#include </usr/include/unistd.h>
+#endif
 
 using namespace android;
 
@@ -22,7 +34,7 @@ static ESContext* mESContext = NULL;
 #define FIXED_ONE 0x10000
 #define ITERATIONS 50
 
-#define SHOW_DEBUG_INFO
+//#define SHOW_DEBUG_INFO
 //#define CLIP_DEMO
 //#define SUPPORT_WIREFRAME
 int init_gl_surface(void);
@@ -241,7 +253,7 @@ int init_gl_surface(void)
 	mESContext = new ESContext;
 	mESContext->context = NULL;
 
-	EGLNativeWindowType window = win32_createDisplaySurface(mESContext);
+	EGLNativeWindowType window = createDisplaySurface(mESContext);
 	EGLUtils::selectConfigForNativeWindow(eglDisplay, attrib, window, &myConfig);
 
 	mESContext->drawFunc = render;
@@ -346,6 +358,7 @@ void create_texture(void)
 	glTexEnvx(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 }
 
+#ifdef SHOW_DEBUG_INFO
 double ShowFps()
 {
 	static LONGLONG totalTime = 0;
@@ -368,6 +381,7 @@ double ShowFps()
 	else
 		return 0;
 }
+#endif
 
 void render(void* esContext)
 {
@@ -440,10 +454,10 @@ void render(void* esContext)
 		0, 0, 0,  // center
 		0, 1, 0); // up
 
-	glRotatef(xrot, 1, 0, 0);  // ÈÆ×ÅxÖáÐý×ª
+	glRotatef(xrot, 1, 0, 0);  // ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½ï¿½×ª
 	glRotatef(yrot, 0, 1, 0);
 
-	// »æÖÆÁù¸öÃæ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	glColor4f(1.0f, 0, 0, 1.0f);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glColor4f(1.0f, 1.0f, 0, 1.0f);
@@ -468,5 +482,10 @@ void render(void* esContext)
 	if (fps != 0)
 		printf("fps :%5.2f \n", fps);
 #endif
+
+#ifdef _MSC_VER
 	Sleep(10);
+#else
+	usleep(100);
+#endif
 }

@@ -21,9 +21,9 @@
 #include <stdint.h>
 #include <sys/types.h>
 
-#include "tinyutils/Vector.h"
-#include "tinyutils/VectorImpl.h"
-#include "tinyutils/TypeHelpers.h"
+#include "Vector.h"
+#include "VectorImpl.h"
+#include "TypeHelpers.h"
 
 // ---------------------------------------------------------------------------
 

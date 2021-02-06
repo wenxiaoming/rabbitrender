@@ -14,8 +14,8 @@
 #include <stdint.h>
 #include <sys/types.h>
 
-#include "tinyutils/SortedVector.h"
-#include "tinyutils/TypeHelpers.h"
+#include "SortedVector.h"
+#include "TypeHelpers.h"
 
 // ---------------------------------------------------------------------------
 

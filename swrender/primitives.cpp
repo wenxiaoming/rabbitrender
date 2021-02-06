@@ -15,7 +15,9 @@
 ** limitations under the License.
 */
 
+#ifdef _MSC_VER
 #include <windows.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -33,6 +35,33 @@ extern "C" void iterators0032(const void* that,
 
 namespace android {
 
+#ifndef _MSC_VER
+static inline int min(int a, int b) CONST;
+static inline int max(int a, int b) CONST;
+static inline int min(int a, int b, int c) CONST;
+static inline int max(int a, int b, int c) CONST;
+#endif
+
+// ----------------------------------------------------------------------------
+#if 0
+#pragma mark -
+#pragma mark Tools
+#endif
+
+#ifndef _MSC_VER
+inline int min(int a, int b) {
+    return a<b ? a : b;
+}
+inline int max(int a, int b) {
+    return a<b ? b : a;
+}
+inline int min(int a, int b, int c) {
+    return min(a,min(b,c));
+}
+inline int max(int a, int b, int c) {
+    return max(a,max(b,c));
+}
+#endif
 // ----------------------------------------------------------------------------
 
 static void primitive_point(ogles_context_t* c, vertex_t* v);
@@ -719,7 +748,12 @@ void lerp_texcoords(ogles_context_t* c,
 {
     const compute_iterators_t& lerp = c->lerp;
     //int32_t itt[8] __attribute__((aligned(16)));
-	__declspec(align(16)) int32_t itt[8];
+	//__declspec(align(16)) int32_t itt[8];
+#ifdef _MSC_VER
+    DECLARE_ALIGNED(16, int32_t, itt[8]);
+#else
+    int32_t itt[8] __attribute__((aligned(16)));
+#endif
     for (int i=0 ; i<GGL_TEXTURE_UNIT_COUNT ; i++) {
         const texture_t& tmu = c->rasterizer.state.texture[i];
         if (!tmu.enable) 
@@ -764,7 +798,11 @@ void lerp_texcoords_w(ogles_context_t* c,
 {
     const compute_iterators_t& lerp = c->lerp;
     //int32_t itt[8] __attribute__((aligned(16)));
+#ifdef _MSC_VER
 	__declspec(align(16)) int32_t itt[8];
+#else
+    int32_t itt[8] __attribute__((aligned(16)));
+#endif
     int32_t itw[3];
 
     // compute W's scale to 2.30

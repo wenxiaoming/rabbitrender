@@ -1,6 +1,6 @@
-#include <GLES/gl.h>
-
 #include <stdlib.h>
+
+#include <GLES/gl.h>
 
 #include "context.h"
 //#include "fp.h"

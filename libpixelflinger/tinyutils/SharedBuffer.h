@@ -11,6 +11,7 @@
 
 #include <stdint.h>
 #include <sys/types.h>
+#include <bits/stdint-uintn.h>
 
 // ---------------------------------------------------------------------------
 

@@ -4,7 +4,14 @@
 *  It is based on the code of nehe.gamedev.net which was developed by Jeff Molofee
 */
 
-#include <windows.h>		// Header File For Windows
+//#include <windows.h>		// Header File For Windows
+
+#include <stdint.h>
+
+#ifndef _MSC_VER
+#include <sys/types.h>
+#endif
+
 #include <stdio.h>			// Header File For Standard Input/Output
 #include <EGL/egl.h>
 
@@ -15,6 +22,9 @@
 
 #include <stdlib.h>
 #include <math.h>
+
+//#include <ratio>
+//#include <chrono>
 
 using namespace android;
 
@@ -32,7 +42,7 @@ static ESContext* mESContext = NULL;
 #define  DISPLAY_HEIGHT 480
 #define  DISPLAY_FORMAT 2
 
-#define  SHOW_DEBUG_INFO
+//#define  SHOW_DEBUG_INFO 0
 
 //#define  SUPPORT_WIREFRAME
 
@@ -45,8 +55,8 @@ int readTimer(void);
 
 
 bool	keys[256];			// Array Used For The Keyboard Routine
-bool	active=TRUE;		// Window Active Flag Set To TRUE By Default
-bool	fullscreen=TRUE;	// Fullscreen Flag Set To Fullscreen Mode By Default
+bool	active= true;		// Window Active Flag Set To TRUE By Default
+bool	fullscreen= true;	// Fullscreen Flag Set To Fullscreen Mode By Default
 
 bool	twinkle;			// Twinkling Stars
 bool	tp;					// 'T' Key Pressed?
@@ -74,9 +84,9 @@ typedef struct _AUX_RGBImageRec {
 	unsigned char *data;
 } AUX_RGBImageRec;
 
-int loadtexture()                                    // Load Bitmaps And Convert To Textures
+bool loadtexture()                                    // Load Bitmaps And Convert To Textures
 {
-        int Status=FALSE;                               // Status Indicator
+        bool status = false;                               // Status Indicator
 
         AUX_RGBImageRec *TextureImage[1];               // Create Storage Space For The Texture
 
@@ -90,13 +100,12 @@ int loadtexture()                                    // Load Bitmaps And Convert
 		FILE* file = fopen("texture.bin", "rb");
 
 		if (!file)
-			return FALSE;
+			return false;
 
 		int ret = fread(TextureImage[0]->data, TextureImage[0]->sizeX*TextureImage[0]->sizeY*3, 1, file);
 		fclose(file);
-
         {
-                Status=TRUE;                            // Set The Status To TRUE
+                status = true;                            // Set The Status To TRUE
 
                 glGenTextures(1, &texture[0]);          // Create One Texture
 
@@ -116,7 +125,7 @@ int loadtexture()                                    // Load Bitmaps And Convert
 
                 free(TextureImage[0]);                  // Free The Image Structure
         }
-        return Status;                                  // Return The Status
+        return status;                                  // Return The Status
 }
 
 GLvoid ReSizeGLScene(GLsizei width, GLsizei height)		// Resize And Initialize The GL Window
@@ -182,28 +191,32 @@ void init_scene(void)										// All Setup For OpenGL Goes Here
 
 }
 
-double ShowFps()
+#ifdef SHOW_DEBUG_INFO
+double showFps()
 {
-	static LONGLONG totalTime = 0;
-	static DWORD  frameNumber = 0;
-	static DWORD previousTime = 0;
+	static unsigned long long totalTime = 0;
+	static unsigned long  frameNumber = 0;
+	static unsigned long previousTime = 0;
 
-	DWORD end = timeGetTime();
+	//unsigned long end = timeGetTime();
+	unsigned long end = std::chrono::duration_cast<std::chrono::seconds>(
+						std::chrono::system_clock::now().time_since_epoch()).count();
 
 	if (previousTime != 0)
 	{
-		totalTime += end-previousTime;
+		totalTime += end - previousTime;
 	}
 
 	previousTime = end;
 
 	frameNumber++;
 
-	if ((frameNumber%10)==0)
+	if ((frameNumber % 10)==0)
 		return (double)frameNumber/(totalTime/1000);
 	else
 		return 0;
 }
+#endif
 
 void render(void *esContext)
 {
@@ -295,7 +308,7 @@ void render(void *esContext)
 	eglSwapBuffers(eglDisplay, eglSurface);
 
 #ifdef SHOW_DEBUG_INFO
-	double fps = ShowFps();
+	double fps = showFps();
 	if (fps != 0)
 		printf("fps :%5.2f \n", fps);
 #endif
@@ -452,7 +465,7 @@ int init_gl_surface(void)
 	mESContext = new ESContext;
 	mESContext->context = NULL;
 
-	EGLNativeWindowType window = win32_createDisplaySurface(mESContext, DISPLAY_WIDTH, DISPLAY_HEIGHT, DISPLAY_FORMAT);
+	EGLNativeWindowType window = createDisplaySurface(mESContext, DISPLAY_WIDTH, DISPLAY_HEIGHT, DISPLAY_FORMAT);
 
 	EGLUtils::selectConfigForNativeWindow(eglDisplay, attrib, window, &myConfig);
 

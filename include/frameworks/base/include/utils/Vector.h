@@ -237,11 +237,14 @@ Vector<TYPE>& Vector<TYPE>::operator = (const Vector<TYPE>& rhs) {
     return *this; 
 }
 
+#if 0
 template<class TYPE> inline
 const Vector<TYPE>& Vector<TYPE>::operator = (const Vector<TYPE>& rhs) const {
     VectorImpl::operator = (static_cast<const VectorImpl&>(rhs));
+    printf("Vector<TYPE>& Vector<TYPE>::operator\n");
     return *this;
 }
+#endif
 
 template<class TYPE> inline
 Vector<TYPE>& Vector<TYPE>::operator = (const SortedVector<TYPE>& rhs) {

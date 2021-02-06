@@ -26,6 +26,7 @@
 #include <utils/RefBase.h>
 #include <utils/KeyedVector.h>
 #include <utils/Errors.h>
+#include <system/window.h>
 
 #include <private/pixelflinger/ggl_context.h>
 

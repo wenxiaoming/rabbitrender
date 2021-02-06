@@ -11,7 +11,7 @@
 
 #include <cutils/atomic.h>
 
-#include "tinyutils/SharedBuffer.h"
+#include "SharedBuffer.h"
 
 // ---------------------------------------------------------------------------
 

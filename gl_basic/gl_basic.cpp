@@ -1,5 +1,11 @@
 // Simple OpenGL ES 1.x application showing how to initialize and draw something.
 
+#include <stdint.h>
+
+#ifndef _MSC_VER
+#include <sys/types.h>
+#endif
+
 #include <EGL/egl.h>
 
 #include <GLES/gl.h>
@@ -10,6 +16,7 @@
 
 #include <stdlib.h>
 #include <math.h>
+#include <memory.h>
 
 using namespace android;
 
@@ -238,7 +245,7 @@ int init_gl_surface(void)
 	mESContext = new ESContext;
 	mESContext->context = NULL;
 
-	EGLNativeWindowType window = win32_createDisplaySurface(mESContext);
+	EGLNativeWindowType window = createDisplaySurface(mESContext);
 	EGLUtils::selectConfigForNativeWindow(eglDisplay, attrib, window, &myConfig);
 
 	mESContext->drawFunc = render;

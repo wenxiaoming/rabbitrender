@@ -1,5 +1,5 @@
-#ifndef _CYGWIN_INTTYPES_H
-#define _CYGWIN_INTTYPES_H
+#ifndef _MY_INTTYPES_H
+#define _MY_INTTYPES_H
 /* /usr/include/inttypes.h for CYGWIN
  * Copyleft 2001-2002 by Felix Buenemann
  * <atmosfear at users.sourceforge.net>
@@ -12,6 +12,15 @@
 
 #ifndef WIN32
 
+//#include <stdint.h>
+#include <bits/stdint-uintn.h>
+
+typedef __intptr_t intptr_t;
+//typedef signed int intptr_t;
+typedef signed int intmax_t;
+typedef unsigned int uintmax_t;
+//typedef unsigned int uintptr_t;
+//typedef unsigned int size_t;
 #include <stdint.h>
 
 #else
@@ -430,6 +439,14 @@ static uint32_t ALWAYS_INLINE ctz( uint32_t x )
 	return popcnt((x & -x) - 1);
 }
 #endif
+
+#endif
+
+#if defined __GNUC__
+#include <stdint.h>
+
+typedef unsigned long uintptr_t;
+
 #endif
 
 #endif

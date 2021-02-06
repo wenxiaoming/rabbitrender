@@ -1,38 +1,12 @@
-//
-// Book:      OpenGL(R) ES 2.0 Programming Guide
-// Authors:   Aaftab Munshi, Dan Ginsburg, Dave Shreiner
-// ISBN-10:   0321502795
-// ISBN-13:   9780321502797
-// Publisher: Addison-Wesley Professional
-// URLs:      http://safari.informit.com/9780321563835
-//            http://www.opengles-book.com
-//
-
-//
-//    This file contains the Win32 implementation of the windowing functions. 
-
-
-///
-// Includes
-//
 #define WIN32_LEAN_AND_MEAN
+#ifdef _MSC_VER
 #include <windows.h>
+#endif
 #include <stdio.h>
 //#include "esUtil.h"
 #include "EsUtilWin.h"
 
-//////////////////////////////////////////////////////////////////
-//
-//  Private Functions
-//
-//
 
-
-///
-//  ESWindowProc()
-//
-//      Main window procedure
-//
 LRESULT WINAPI ESWindowProc ( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) 
 {
    LRESULT  lRet = 1; 
@@ -85,17 +59,6 @@ LRESULT WINAPI ESWindowProc ( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
    return lRet; 
 }
 
-//////////////////////////////////////////////////////////////////
-//
-//  Public Functions
-//
-//
-
-///
-//  WinCreate()
-//
-//      Create Win32 instance and window
-//
 HWND WinCreate ( const char *title, int width, int height, ESContext* context)
 {
    WNDCLASS wndclass = {0}; 
@@ -152,11 +115,6 @@ HWND WinCreate ( const char *title, int width, int height, ESContext* context)
    return hWnd;
 }
 
-///
-//  winLoop()
-//
-//      Start main windows loop
-//
 void WinLoop ( ESContext *esContext)
 {
    MSG msg = { 0 };

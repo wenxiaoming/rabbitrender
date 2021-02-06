@@ -18,7 +18,8 @@
 #define ANDROID_INCLUDE_HARDWARE_HARDWARE_H
 
 #include <stdint.h>
-#include <hardware/cdefs.h>
+//#include <hardware/cdefs.h>
+//#include <hardware/cdefs.h>
 
 #include <cutils/native_handle.h>
 #include <system/graphics.h>

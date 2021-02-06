@@ -494,10 +494,18 @@ struct transform_state_t {
 
     // modelview * projection
     //transform_t         mvp     __attribute__((aligned(32)));
+#if defined(_MSC_VER)
 	__declspec (align(32)) transform_t         mvp;
+#else
+    transform_t         mvp     __attribute__((aligned(32)));
+#endif
     // viewport transformation
     //vp_transform_t      vpt     __attribute__((aligned(32)));
+#if defined(_MSC_VER)
 	__declspec (align(32)) vp_transform_t      vpt;
+#else
+    vp_transform_t      vpt     __attribute__((aligned(32)));
+#endif
     // same for 4-D vertices
     transform_t         mvp4;
     // full modelview inverse transpose
@@ -606,7 +614,11 @@ struct prims_t {
 struct ogles_context_t {
     context_t               rasterizer;
     //array_machine_t         arrays         __attribute__((aligned(32)));
+#if defined(_MSC_VER)
 	__declspec (align(32)) array_machine_t         arrays;
+#else
+    array_machine_t         arrays         __attribute__((aligned(32)));
+#endif
     texture_state_t         textures;
     transform_state_t       transforms;
     vertex_cache_t          vc;
@@ -615,7 +627,11 @@ struct ogles_context_t {
     lighting_t              lighting;
     user_clip_planes_t      clipPlanes;
     //compute_iterators_t     lerp;           __attribute__((aligned(32)));
+#if defined(_MSC_VER)
 	__declspec (align(32))  compute_iterators_t     lerp;
+#else
+    compute_iterators_t     lerp;           __attribute__((aligned(32)));
+#endif
     vertex_t                current;
     vec4_t                  currentColorClamped;
     vec3_t                  currentNormal;

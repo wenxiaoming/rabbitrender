@@ -1,10 +1,12 @@
-#ifndef _UNISTD_H
-#define _UNISTD_H    1
+#ifndef _MY_UNISTD_H
+#define _MY_UNISTD_H
 
 /* This file intended to serve as a drop-in replacement for 
  *  unistd.h on Windows
  *  Please add functionality as neeeded 
  */
+
+#ifdef _MSC_VER
 
 #include <stdlib.h>
 #include <io.h>
@@ -34,5 +36,11 @@ typedef unsigned __int8   uint8_t;
 typedef unsigned __int16  uint16_t;
 typedef unsigned __int32  uint32_t;
 typedef unsigned __int64  uint64_t;
+#else
+
+//#include <bits/stdint-uintn.h>
+#include <unistd.h>
+
+#endif
 
 #endif /* unistd.h  */

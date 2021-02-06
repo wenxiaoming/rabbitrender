@@ -66,7 +66,9 @@
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN 1
 #endif
+#ifdef _MSC_VER
 #include <windows.h>
+#endif
 
 typedef HDC     EGLNativeDisplayType;
 typedef HBITMAP EGLNativePixmapType;

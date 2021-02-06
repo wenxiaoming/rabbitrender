@@ -44,7 +44,9 @@ typedef struct {
 
 #elif defined HAVE_WIN32_THREADS
 
+#ifdef _MSC_VER
 #include <windows.h>
+#endif
 
 typedef struct {
     int               lock_init;

@@ -22,7 +22,7 @@
 //#include <hardware/hardware.h>
 
 #include <stdint.h>
-#include <hardware/cdefs.h>
+//#include <hardware/cdefs.h>
 #include <sys/types.h>
 
 #include <cutils/native_handle.h>

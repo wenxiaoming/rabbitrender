@@ -23,7 +23,9 @@
 #include <stdint.h>
 #include <sys/types.h>
 //#include <sys/time.h>
+#ifdef _MSC_VER
 #include <windows.h>
+#endif
 #include "../libpixelflinger/gettimeofday.h"
 // ------------------------------------------------------------------
 // C API

@@ -15,9 +15,9 @@
 
 //#include <cutils/log.h>
 
-#include "tinyutils/Errors.h"
-#include "tinyutils/VectorImpl.h"
-#include "tinyutils/TypeHelpers.h"
+#include "Errors.h"
+#include "VectorImpl.h"
+#include "TypeHelpers.h"
 
 // ---------------------------------------------------------------------------
 

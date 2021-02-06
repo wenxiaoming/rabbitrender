@@ -16,8 +16,8 @@
 
 //#include <cutils/log.h>
 
-#include "tinyutils/SharedBuffer.h"
-#include "tinyutils/VectorImpl.h"
+#include "SharedBuffer.h"
+#include "VectorImpl.h"
 
 /*****************************************************************************/
 

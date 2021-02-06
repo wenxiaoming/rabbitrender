@@ -18,7 +18,7 @@
 #define SYSTEM_CORE_INCLUDE_ANDROID_WINDOW_H
 
 #include <stdint.h>
-#include <hardware/cdefs.h>
+//#include <hardware/cdefs.h>
 #include <system/graphics.h>
 #include <cutils/native_handle.h>
 
