@@ -30,6 +30,10 @@
 #include "fp.h"
 #include "TextureObjectManager.h"
 
+#ifdef _MSC_VER
+#include "internal.h"
+#endif
+
 extern "C" void iterators0032(const void* that,
         int32_t* it, int32_t c0, int32_t c1, int32_t c2);
 

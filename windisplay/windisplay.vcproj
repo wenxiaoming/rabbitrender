@@ -160,6 +160,14 @@
 				RelativePath=".\Framebuffer.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\EsUtilWin.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FramebufferWin.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -176,6 +184,14 @@
 			</File>
 			<File
 				RelativePath=".\Framebuffer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\EsUtilWin.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FramebufferWin.h"
 				>
 			</File>
 		</Filter>

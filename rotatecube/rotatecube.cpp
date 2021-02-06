@@ -1,5 +1,7 @@
 #include <stdint.h>
-
+#ifdef _MSC_VER
+#include <windows.h>
+#endif
 #ifndef _MSC_VER
 #include <sys/types.h>
 #endif

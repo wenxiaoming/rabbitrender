@@ -42,9 +42,14 @@ typedef struct  _ESContext
 	void* context;
 	void (*drawFunc) ( void* );
 
-	_ESContext():window(NULL),
-                 context(NULL),
-                 drawFunc(NULL)
+	_ESContext():
+#ifdef _MSC_VER
+	hwnd(NULL),
+#else
+	window(NULL),
+#endif
+        context(NULL),
+        drawFunc(NULL)
 	{
 
 	}

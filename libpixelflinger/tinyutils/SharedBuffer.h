@@ -11,7 +11,10 @@
 
 #include <stdint.h>
 #include <sys/types.h>
+
+#ifndef _MSC_VER
 #include <bits/stdint-uintn.h>
+#endif
 
 // ---------------------------------------------------------------------------
 

@@ -8,7 +8,9 @@
 
 #include <stdint.h>
 
-#ifndef _MSC_VER
+#ifdef _MSC_VER
+#include <windows.h>		// Header File For Windows
+#else
 #include <sys/types.h>
 #endif
 
