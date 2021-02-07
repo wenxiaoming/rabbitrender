@@ -1,7 +1,8 @@
 # rabbitrender
 rabbitrender is pure software implementation of graphics pipeline, includes programmable shader system.
 
-please open the sln file with visual studio then build it successfully.
+on windows platform, please open the sln file with visual studio then build it successfully.
+on ubuntu, you can use cmake to build it.
 
 there are three test samples, here are the snapshots of running the three test samples.
 
