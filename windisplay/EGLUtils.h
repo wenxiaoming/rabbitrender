@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-
 #ifndef EGLUTILS_H
 #define EGLUTILS_H
 
-#include <utils/Errors.h>
-#include <ui/PixelFormat.h>
 #include <EGL/egl.h>
+#include <ui/PixelFormat.h>
+#include <utils/Errors.h>
 
 #include <stdint.h>
 
@@ -32,38 +31,36 @@
 #include <SDL2/SDL.h>
 #endif
 
-typedef struct  _ESContext
-{
+typedef struct _ESContext {
 #ifdef _MSC_VER
-        HWND hwnd;
+    HWND hwnd;
 #else
-	SDL_Window *window = NULL;
+    SDL_Window *window = NULL;
 #endif
-	void* context;
-	void (*drawFunc) ( void* );
+    void *context;
+    void (*drawFunc)(void *);
 
-	_ESContext():
+    _ESContext()
+        :
 #ifdef _MSC_VER
-	hwnd(NULL),
+          hwnd(NULL),
 #else
-	window(NULL),
+          window(NULL),
 #endif
-        context(NULL),
-        drawFunc(NULL)
-	{
-
-	}
+          context(NULL), drawFunc(NULL) {
+    }
 } ESContext;
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-//typedef struct ANativeWindow* WindowType;
+// typedef struct ANativeWindow* WindowType;
 
-EGLNativeWindowType createDisplaySurface(ESContext* ctx,  int width = 320, int height = 480, int format = 2);
+EGLNativeWindowType createDisplaySurface(ESContext *ctx, int width = 320,
+                                         int height = 480, int format = 2);
 
-void WinLoop (ESContext* ctx);
+void WinLoop(ESContext *ctx);
 
 #ifdef __cplusplus
 }
@@ -73,23 +70,19 @@ void WinLoop (ESContext* ctx);
 namespace android {
 // ----------------------------------------------------------------------------
 
-class EGLUtils
-{
-public:
-
+class EGLUtils {
+  public:
     static const char *strerror(EGLint err);
 
-    static status_t selectConfigForPixelFormat(
-            EGLDisplay dpy,
-            EGLint const* attrs,
-            PixelFormat format,
-            EGLConfig* outConfig);
+    static status_t selectConfigForPixelFormat(EGLDisplay dpy,
+                                               EGLint const *attrs,
+                                               PixelFormat format,
+                                               EGLConfig *outConfig);
 
-    static status_t selectConfigForNativeWindow(
-            EGLDisplay dpy,
-            EGLint const* attrs,
-            EGLNativeWindowType window,
-            EGLConfig* outConfig);
+    static status_t selectConfigForNativeWindow(EGLDisplay dpy,
+                                                EGLint const *attrs,
+                                                EGLNativeWindowType window,
+                                                EGLConfig *outConfig);
 };
 
 // ----------------------------------------------------------------------------

@@ -4,21 +4,19 @@
 #ifdef _MSC_VER
 #include <windows.h>
 #endif
-#include <stdio.h>
 #include "FramebufferSDL.h"
+#include <stdio.h>
 
-static SDL_Window* SDLWinowCreate ( const char *title, int width, int height, ESContext* context);
+static SDL_Window *SDLWinowCreate(const char *title, int width, int height,
+                                  ESContext *context);
 
-SDL_Window* SDLWinowCreate ( const char *title, int width, int height, ESContext* context)
-{
+SDL_Window *SDLWinowCreate(const char *title, int width, int height,
+                           ESContext *context) {
     SDL_Init(SDL_INIT_VIDEO);
 
-    SDL_Window* window = SDL_CreateWindow(title,
-                              SDL_WINDOWPOS_UNDEFINED,
-                              SDL_WINDOWPOS_UNDEFINED,
-                              width,
-                              height,
-                              SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);// 创建窗口
+    SDL_Window *window = SDL_CreateWindow(
+        title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height,
+        SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE); // 创建窗口
 
     if (!window) {
         return NULL;
@@ -28,10 +26,10 @@ SDL_Window* SDLWinowCreate ( const char *title, int width, int height, ESContext
 }
 
 // Refresh Event
-#define REFRESH_EVENT  (SDL_USEREVENT + 1)
+#define REFRESH_EVENT (SDL_USEREVENT + 1)
 static int thread_quit = 0;
-int refresh_render(void *opaque){
-    while (thread_quit==0) {
+int refresh_render(void *opaque) {
+    while (thread_quit == 0) {
         SDL_Event event;
         event.type = REFRESH_EVENT;
         SDL_PushEvent(&event);
@@ -40,46 +38,44 @@ int refresh_render(void *opaque){
     return 0;
 }
 
-void SDL_WinLoop ( ESContext *esContext)
-{
-   SDL_Thread *refresh_thread = SDL_CreateThread(refresh_render,NULL,NULL);
-   while (!thread_quit)
-   {
+void SDL_WinLoop(ESContext *esContext) {
+    SDL_Thread *refresh_thread = SDL_CreateThread(refresh_render, NULL, NULL);
+    while (!thread_quit) {
         SDL_Event event;
         SDL_PollEvent(&event);
         switch (event.type) {
-            case REFRESH_EVENT:
-                //SDL_Log("REFRESH_EVENT");
-                {
-                    if (esContext && esContext->context && esContext->drawFunc)
-                    {
-                        esContext->drawFunc(esContext->context);
-                    }
+        case REFRESH_EVENT:
+            // SDL_Log("REFRESH_EVENT");
+            {
+                if (esContext && esContext->context && esContext->drawFunc) {
+                    esContext->drawFunc(esContext->context);
                 }
-                break;
-            case SDL_QUIT:
-                SDL_Log("quit");
-                thread_quit = 1;
-                break;
-            default:
-                //SDL_Log("event type:%d", event.type);
-                break;
+            }
+            break;
+        case SDL_QUIT:
+            SDL_Log("quit");
+            thread_quit = 1;
+            break;
+        default:
+            // SDL_Log("event type:%d", event.type);
+            break;
         }
-   }
+    }
 
-   SDL_DetachThread(refresh_thread);
+    SDL_DetachThread(refresh_thread);
 }
 
 using namespace android;
-EGLNativeWindowType SDL_CreateDisplaySurface(ESContext* ctx,  int width, int height, int format)
-{
+EGLNativeWindowType SDL_CreateDisplaySurface(ESContext *ctx, int width,
+                                             int height, int format) {
 
-    SDL_Window* window = SDLWinowCreate ( "Kevin.Wen listream@126.com", width, height, ctx);
+    SDL_Window *window =
+        SDLWinowCreate("Kevin.Wen listream@126.com", width, height, ctx);
 
-    FramebufferSDL* w;
+    FramebufferSDL *w;
     w = new FramebufferSDL(window, width, height, format);
 
-	ctx->context = w;
+    ctx->context = w;
     ctx->window = window;
     return (EGLNativeWindowType)w;
 }

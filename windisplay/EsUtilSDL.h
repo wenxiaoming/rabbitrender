@@ -9,9 +9,9 @@
 
 #include <SDL2/SDL.h>
 
-#include <sys/types.h>
-#include <GLES2/gl2.h>
 #include <EGL/egl.h>
+#include <GLES2/gl2.h>
+#include <sys/types.h>
 
 #include "EGLUtils.h"
 
@@ -26,9 +26,10 @@
 extern "C" {
 #endif
 
-EGLNativeWindowType SDL_CreateDisplaySurface(ESContext* ctx,  int width = 320, int height = 480, int format = 2);
+EGLNativeWindowType SDL_CreateDisplaySurface(ESContext *ctx, int width = 320,
+                                             int height = 480, int format = 2);
 
-void SDL_WinLoop (ESContext *esContext);
+void SDL_WinLoop(ESContext *esContext);
 
 #ifdef __cplusplus
 }
