@@ -17,14 +17,23 @@
 
 #define LOG_TAG "EGLUtils"
 
-//#include <cutils/log.h>
+#include "EGLUtils.h"
 #include <utils/Errors.h>
 
-#include <ui/EGLUtils.h>
+//#include <ui/EGLUtils.h>
 
 #include <EGL/egl.h>
 
 #include <private/ui/android_natives_priv.h>
+
+#ifndef _MSC_VER
+#include "EsUtilSDL.h"
+#include "FramebufferSDL.h"
+#else
+#include "EsUtilWin.h"
+#include "FramebufferWin.h"
+#endif
+
 
 // ----------------------------------------------------------------------------
 namespace android {
@@ -115,7 +124,25 @@ status_t EGLUtils::selectConfigForNativeWindow(
 
     return selectConfigForPixelFormat(dpy, attrs, format, outConfig);
 }
-
 // ----------------------------------------------------------------------------
 }; // namespace android
 // ----------------------------------------------------------------------------
+
+using namespace android;
+EGLNativeWindowType createDisplaySurface(ESContext* ctx,  int width, int height, int format)
+{
+#ifndef _MSC_VER
+    return SDL_CreateDisplaySurface(ctx, width, height, format);
+#else
+    return win32_createDisplaySurface(ctx, width, height, format);
+#endif
+}
+
+void WinLoop ( ESContext* ctx)
+{
+#ifndef _MSC_VER
+    return SDL_WinLoop(ctx);
+#else
+    return Win32_WinLoop(ctx);
+#endif
+}

@@ -6,8 +6,7 @@
 //#include "esUtil.h"
 #include "EsUtilWin.h"
 
-
-LRESULT WINAPI ESWindowProc ( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) 
+static LRESULT WINAPI ESWindowProc ( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) 
 {
    LRESULT  lRet = 1; 
 
@@ -59,7 +58,7 @@ LRESULT WINAPI ESWindowProc ( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
    return lRet; 
 }
 
-HWND WinCreate ( const char *title, int width, int height, ESContext* context)
+static HWND WinCreate ( const char *title, int width, int height, ESContext* context)
 {
    WNDCLASS wndclass = {0}; 
    DWORD    wStyle   = 0;
@@ -147,4 +146,26 @@ void WinLoop ( ESContext *esContext)
       //if ( esContext->updateFunc != NULL )
       //   esContext->updateFunc ( esContext, deltaTime );
    }
+}
+
+
+using namespace android;
+EGLNativeWindowType win32_createDisplaySurface(ESContext* ctx,  int width, int height, int format)
+{
+
+    HWND hwnd = WinCreate ( "Kevin.Wen listream@126.com", width, height, ctx);
+
+    FramebufferWin32* w;
+    w = new FramebufferWin32(hwnd, width, height, format);
+
+    ctx->context = w;
+    ctx->hwnd = hwnd;
+    return (EGLNativeWindowType)w;
+}
+
+EGLNativeWindowType win32_createDisplaySurfaceNew(HWND hwnd, int width, int height, int format)
+{
+	FramebufferWin32* w;
+	w = new FramebufferWin32(hwnd, width, height, format);
+	return (EGLNativeWindowType)w;
 }

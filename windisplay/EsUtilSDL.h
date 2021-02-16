@@ -26,11 +26,9 @@
 extern "C" {
 #endif
 
+EGLNativeWindowType SDL_CreateDisplaySurface(ESContext* ctx,  int width = 320, int height = 480, int format = 2);
 
-SDL_Window* SDLWinowCreate ( const char *title, int width, int height, ESContext* context);
-
-
-void WinLoop ( ESContext *esContext );
+void SDL_WinLoop (ESContext *esContext);
 
 #ifdef __cplusplus
 }

@@ -12,12 +12,9 @@
 extern "C" {
 #endif
 
- LRESULT WINAPI ESWindowProc ( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
+EGLNativeWindowType win32_createDisplaySurface(ESContext* ctx,  int width, int height, int format)
 
-
-HWND WinCreate ( const char *title, int width, int height, ESContext* context);
-
-void WinLoop ( ESContext *esContext );
+void WinLoop(ESContext *esContext);
 
 #ifdef __cplusplus
 }

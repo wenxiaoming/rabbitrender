@@ -440,6 +440,9 @@ struct ANativeWindow
     int     (*cancelBuffer)(struct ANativeWindow* window,
                 struct ANativeWindowBuffer* buffer);
 
+    void    (*wait)(struct ANativeWindow* window, int32_t sec);
+
+    void    (*showImage)(struct ANativeWindow* window, uint8_t* buffer);
 
     void* reserved_proc[2];
 };

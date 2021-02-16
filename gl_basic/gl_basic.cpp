@@ -11,7 +11,7 @@
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 
-#include "Framebuffer.h"
+#include "EGLUtils.h"
 #include <stdio.h>
 
 #include <stdlib.h>
@@ -246,6 +246,7 @@ int init_gl_surface(void)
 	mESContext->context = NULL;
 
 	EGLNativeWindowType window = createDisplaySurface(mESContext);
+
 	EGLUtils::selectConfigForNativeWindow(eglDisplay, attrib, window, &myConfig);
 
 	mESContext->drawFunc = render;

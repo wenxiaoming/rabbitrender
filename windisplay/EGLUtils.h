@@ -15,8 +15,8 @@
  */
 
 
-#ifndef ANDROID_UI_EGLUTILS_H
-#define ANDROID_UI_EGLUTILS_H
+#ifndef EGLUTILS_H
+#define EGLUTILS_H
 
 #include <utils/Errors.h>
 #include <ui/PixelFormat.h>
@@ -55,9 +55,19 @@ typedef struct  _ESContext
 	}
 } ESContext;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-//typedef int         status_t;
-//typedef int32_t PixelFormat;
+//typedef struct ANativeWindow* WindowType;
+
+EGLNativeWindowType createDisplaySurface(ESContext* ctx,  int width = 320, int height = 480, int format = 2);
+
+void WinLoop (ESContext* ctx);
+
+#ifdef __cplusplus
+}
+#endif
 
 // ----------------------------------------------------------------------------
 namespace android {

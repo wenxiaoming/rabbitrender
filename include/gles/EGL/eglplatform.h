@@ -98,8 +98,8 @@ typedef void*                           EGLNativeDisplayType;
 
 typedef Display *EGLNativeDisplayType;
 typedef Pixmap   EGLNativePixmapType;
-typedef Window   EGLNativeWindowType;
-
+//typedef Window   EGLNativeWindowType;
+typedef struct ANativeWindow*           EGLNativeWindowType;
 #else
 #error "Platform not recognized"
 #endif

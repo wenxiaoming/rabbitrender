@@ -14,7 +14,7 @@
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 
-#include "Framebuffer.h"
+#include "EGLUtils.h"
 #include <stdio.h>
 
 #include <stdlib.h>

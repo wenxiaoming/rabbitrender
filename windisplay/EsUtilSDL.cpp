@@ -1,10 +1,13 @@
+#include "EsUtilSDL.h"
+
 #define WIN32_LEAN_AND_MEAN
 #ifdef _MSC_VER
 #include <windows.h>
 #endif
 #include <stdio.h>
-//#include "esUtil.h"
-#include "EsUtilSDL.h"
+#include "FramebufferSDL.h"
+
+static SDL_Window* SDLWinowCreate ( const char *title, int width, int height, ESContext* context);
 
 SDL_Window* SDLWinowCreate ( const char *title, int width, int height, ESContext* context)
 {
@@ -37,7 +40,7 @@ int refresh_render(void *opaque){
     return 0;
 }
 
-void WinLoop ( ESContext *esContext)
+void SDL_WinLoop ( ESContext *esContext)
 {
    SDL_Thread *refresh_thread = SDL_CreateThread(refresh_render,NULL,NULL);
    while (!thread_quit)
@@ -65,4 +68,18 @@ void WinLoop ( ESContext *esContext)
    }
 
    SDL_DetachThread(refresh_thread);
+}
+
+using namespace android;
+EGLNativeWindowType SDL_CreateDisplaySurface(ESContext* ctx,  int width, int height, int format)
+{
+
+    SDL_Window* window = SDLWinowCreate ( "Kevin.Wen listream@126.com", width, height, ctx);
+
+    FramebufferSDL* w;
+    w = new FramebufferSDL(window, width, height, format);
+
+	ctx->context = w;
+    ctx->window = window;
+    return (EGLNativeWindowType)w;
 }
