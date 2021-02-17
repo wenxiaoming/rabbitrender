@@ -16,6 +16,13 @@
 
 #define LOG_TAG "EGLUtils"
 
+#include <stdint.h>
+
+#ifndef _MSC_VER
+#include <sys/types.h>
+#endif
+
+
 #include "EGLUtils.h"
 #include <utils/Errors.h>
 
