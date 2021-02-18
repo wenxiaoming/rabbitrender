@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.2)
 project(rabbitrender C CXX)
 
+add_subdirectory("compiler/frontend")
+
 # include directories
 include_directories(${CMAKE_INCLUDE_PATH})
 include_directories("include")
