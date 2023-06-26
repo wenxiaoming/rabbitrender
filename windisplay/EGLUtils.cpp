@@ -136,9 +136,9 @@ status_t EGLUtils::selectConfigForNativeWindow(EGLDisplay dpy,
     if (!window)
         return BAD_VALUE;
 
-    if ((err = ((ANativeWindow *)window)
-                   ->query((ANativeWindow *)window, NATIVE_WINDOW_FORMAT,
-                           &format)) < 0) {
+    ANativeWindow *wm = (ANativeWindow *)window;
+    if (err = wm->query((ANativeWindow *)window, NATIVE_WINDOW_FORMAT,
+                           &format)< 0) {
         return err;
     }
 
@@ -162,6 +162,6 @@ void WinLoop(ESContext *ctx) {
 #ifndef _MSC_VER
     return SDL_WinLoop(ctx);
 #else
-    return Win32_WinLoop(ctx);
+    return Windows_WinLoop(ctx);
 #endif
 }

@@ -11,6 +11,7 @@
 
 #include "EGLUtils.h"
 #include "EsUtilWin.h"
+#include "Framebuffer.h"
 #include <EGL/egl.h>
 #include <ui/egl/android_natives.h>
 
@@ -35,7 +36,7 @@ class NativeBuffer;
 class FramebufferWin32 : public Framebuffer {
   public:
     FramebufferWin32(HWND hwnd, int width, int height, int format);
-    ~FramebufferWin32(); // this class cannot be overloaded
+    virtual ~FramebufferWin32(); // this class cannot be overloaded
 
   private:
     static void wait(ANativeWindow *window, int32_t sec);

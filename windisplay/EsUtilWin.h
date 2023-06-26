@@ -12,9 +12,9 @@ extern "C" {
 #endif
 
 EGLNativeWindowType win32_createDisplaySurface(ESContext *ctx, int width,
-                                               int height, int format)
+                                               int height, int format);
 
-void WinLoop(ESContext *esContext);
+void Windows_WinLoop(ESContext *esContext);
 
 #ifdef __cplusplus
 }

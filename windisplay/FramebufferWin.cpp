@@ -16,16 +16,11 @@ namespace android {
 // ----------------------------------------------------------------------------
 
 FramebufferWin32::FramebufferWin32(HWND hwnd, int width, int height,
-                                   int format),
-    mHwnd(hwnd), Framebuffer(width, height, format) {
+                                   int format)
+    : mHwnd(hwnd), Framebuffer(width, height, format) {
     if (IsWindow(hwnd)) {
         RECT rect;
         GetWindowRect(hwnd, &rect);
-
-        mWindowWidth = width;   // rect.right - rect.left;
-        mWindowHeight = height; // rect.bottom - rect.top;
-
-        mFormat = format;
 
         mHDC = GetDC(mHwnd);
 
@@ -54,8 +49,8 @@ FramebufferWin32::FramebufferWin32(HWND hwnd, int width, int height,
 
         mBmpInfo->bmiHeader.biBitCount = 32;
         mBmpInfo->bmiHeader.biCompression = BI_RGB;
-        mBmpInfo->bmiHeader.biWidth = mWindowWidth;
-        mBmpInfo->bmiHeader.biHeight = -mWindowHeight;
+        mBmpInfo->bmiHeader.biWidth = width;
+        mBmpInfo->bmiHeader.biHeight = height;
 
         memcpy(mBmpInfo->bmiColors, argbq, sizeof(RGBQUAD) * 256);
 
@@ -82,18 +77,18 @@ void FramebufferWin32::showImage(ANativeWindow *window, uint8_t *buffer) {
     int j = 0;
     int bpp = self->mBmpInfo->bmiHeader.biBitCount / 8;
     unsigned char *tempBuffer = buffer;
-    for (i = 0; i < self->mWindowHeight; i++) {
-        for (j = 0; j < self->mWindowWidth * bpp; j += bpp) {
+    for (i = 0; i < self->getWindowHeight(); i++) {
+        for (j = 0; j < self->getWindowWidth() * bpp; j += bpp) {
             unsigned char temp = *(tempBuffer + j);
             *(tempBuffer + j) = *(tempBuffer + j + 2);
             *(tempBuffer + j + 2) = temp;
         }
-        tempBuffer += self->mWindowWidth * bpp;
+        tempBuffer += self->getWindowWidth() * bpp;
     }
 
     SetStretchBltMode(self->mHDC, STRETCH_DELETESCANS);
-    StretchDIBits(self->mHDC, 0, 0, self->mWindowWidth, self->mWindowHeight, 0,
-                  0, self->mWindowWidth, self->mWindowHeight, buffer,
+    StretchDIBits(self->mHDC, 0, 0, self->getWindowWidth(), self->getWindowHeight(), 0,
+                  0, self->getWindowWidth(), self->getWindowHeight(), buffer,
                   self->mBmpInfo, DIB_RGB_COLORS, SRCCOPY);
 }
 

@@ -5,6 +5,7 @@
 #include <stdio.h>
 //#include "esUtil.h"
 #include "EsUtilWin.h"
+#include "FramebufferWin.h"
 
 static LRESULT WINAPI ESWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam,
                                    LPARAM lParam) {
@@ -98,7 +99,7 @@ static HWND WinCreate(const char *title, int width, int height,
     return hWnd;
 }
 
-void WinLoop(ESContext *esContext) {
+void Windows_WinLoop(ESContext *esContext) {
     MSG msg = {0};
     int done = 0;
     DWORD lastTime = GetTickCount();
@@ -136,7 +137,7 @@ EGLNativeWindowType win32_createDisplaySurface(ESContext *ctx, int width,
 
     ctx->context = w;
     ctx->hwnd = hwnd;
-    return (EGLNativeWindowType)w;
+    return (EGLNativeWindowType)((struct ANativeWindow*)w);
 }
 
 EGLNativeWindowType win32_createDisplaySurfaceNew(HWND hwnd, int width,
