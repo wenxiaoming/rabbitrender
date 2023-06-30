@@ -18,8 +18,8 @@
 #include <stdio.h>
 #include <stdint.h>
 
-#include <private/pixelflinger/ggl_context.h>
-#include <private/pixelflinger/ggl_fixed.h>
+#include "ggl_context.h"
+#include "ggl_fixed.h"
 
 
 // ------------------------------------------------------------------------

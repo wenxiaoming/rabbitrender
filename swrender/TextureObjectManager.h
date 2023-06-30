@@ -26,9 +26,9 @@
 #include <utils/RefBase.h>
 #include <utils/KeyedVector.h>
 #include <utils/Errors.h>
-#include <system/window.h>
+#include "window.h"
 
-#include <private/pixelflinger/ggl_context.h>
+#include "ggl_context.h"
 
 #include <GLES/gl.h>
 #include <EGL/egl.h>
@@ -36,7 +36,7 @@
 
 #include "Tokenizer.h"
 #include "TokenManager.h"
-
+#include "atomic.h"
 
 namespace android {
 

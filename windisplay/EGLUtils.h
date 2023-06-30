@@ -18,7 +18,7 @@
 #define EGLUTILS_H
 
 #include <EGL/egl.h>
-#include <ui/PixelFormat.h>
+#include "PixelFormat.h"
 #include <utils/Errors.h>
 
 #include <stdint.h>

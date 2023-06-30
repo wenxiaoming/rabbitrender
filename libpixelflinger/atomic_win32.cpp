@@ -1,6 +1,6 @@
 //add by Kevin.Wen
 
-#include <cutils/atomic.h>
+#include "atomic.h"
 
 int32_t android_atomic_inc(volatile int32_t* addr)
 {

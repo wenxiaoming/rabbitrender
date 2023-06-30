@@ -16,7 +16,7 @@
 */
 
 #include <stdio.h>
-#include <pixelflinger/format.h>
+#include "format.h"
 
 namespace android {
 

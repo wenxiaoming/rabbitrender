@@ -14,7 +14,7 @@
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 
-#include "EGLUtils.h"
+#include "../windisplay/EGLUtils.h"
 #include <stdio.h>
 
 #include <math.h>

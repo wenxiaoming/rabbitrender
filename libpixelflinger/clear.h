@@ -18,8 +18,8 @@
 #ifndef ANDROID_GGL_CLEAR_H
 #define ANDROID_GGL_CLEAR_H
 
-#include <pixelflinger/pixelflinger.h>
-#include <private/pixelflinger/ggl_context.h>
+#include "pixelflinger.h"
+#include "ggl_context.h"
 
 namespace android {
 

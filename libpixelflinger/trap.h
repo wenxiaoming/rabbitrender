@@ -19,7 +19,7 @@
 #ifndef ANDROID_TRAP_H
 #define ANDROID_TRAP_H
 
-#include <private/pixelflinger/ggl_context.h>
+#include "ggl_context.h"
 
 namespace android {
 

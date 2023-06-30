@@ -19,7 +19,7 @@
 #ifndef ANDROID_PICKER_H
 #define ANDROID_PICKER_H
 
-#include <private/pixelflinger/ggl_context.h>
+#include "ggl_context.h"
 
 namespace android {
 

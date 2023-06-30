@@ -23,7 +23,7 @@
 #include <sys/types.h>
 //#include <utils/Log.h>
 
-#include <private/pixelflinger/ggl_context.h>
+#include "ggl_context.h"
 
 #include <GLES/gl.h>
 

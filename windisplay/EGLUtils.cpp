@@ -30,7 +30,7 @@
 
 #include <EGL/egl.h>
 
-#include <private/ui/android_natives_priv.h>
+#include "android_natives.h"
 
 #ifndef _MSC_VER
 #include "EsUtilSDL.h"

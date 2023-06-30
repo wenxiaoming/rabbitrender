@@ -22,7 +22,7 @@
 #include "context.h"
 #include "TextureObjectManager.h"
 
-#include <private/ui/android_natives_priv.h>
+#include "android_natives.h"
 
 namespace android {
 // ----------------------------------------------------------------------------

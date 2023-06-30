@@ -1,6 +1,6 @@
 //add by Kevin.Wen
 
-#include <cutils/memory.h>
+#include "memory.h"
 
 /* size is given in bytes and must be multiple of 2 */
 void android_memset16(uint16_t* dst, uint16_t value, size_t size)

@@ -23,7 +23,7 @@
 #include "picker.h"
 
 //#include <cutils/log.h>
-#include <cutils/memory.h>
+#include "memory.h"
 
 namespace android {
 

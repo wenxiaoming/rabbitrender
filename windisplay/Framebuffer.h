@@ -6,7 +6,7 @@
 #include <sys/types.h>
 
 #include <EGL/egl.h>
-#include <ui/egl/android_natives.h>
+#include "android_natives.h"
 
 #include "EGLUtils.h"
 
@@ -14,6 +14,7 @@
 namespace android {
 // ---------------------------------------------------------------------------
 #define NUM_FRAME_BUFFERS 2
+#define GRALLOC_USAGE_HW_FB 0
 
 class Surface;
 class NativeBuffer;

@@ -15,7 +15,7 @@
 ** limitations under the License.
 */
 
-#include <cutils/memory.h>
+#include "memory.h"
 
 #include "clear.h"
 #include "buffer.h"

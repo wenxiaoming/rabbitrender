@@ -27,7 +27,7 @@
 //#include <sys/mman.h>
 
 //#include <cutils/log.h>
-#include <cutils/atomic.h>
+#include "atomic.h"
 
 #include <utils/threads.h>
 
@@ -36,10 +36,10 @@
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 
-#include <pixelflinger/format.h>
-#include <pixelflinger/pixelflinger.h>
+#include "format.h"
+#include "pixelflinger.h"
 
-#include <private/ui/android_natives_priv.h>
+#include "android_natives.h"
 
 #include "context.h"
 #include "state.h"
@@ -239,7 +239,7 @@ private:
     ANativeWindow*   nativeWindow;
     ANativeWindowBuffer*   buffer;
     ANativeWindowBuffer*   previousBuffer;
-    gralloc_module_t const*    module;
+    //gralloc_module_t const*    module;
     int width;
     int height;
     void* bits;
@@ -338,10 +338,10 @@ egl_window_surface_v2_t::egl_window_surface_v2_t(EGLDisplay dpy,
         int32_t depthFormat,
         ANativeWindow* window)
     : egl_surface_t(dpy, config, depthFormat), 
-    nativeWindow(window), buffer(0), previousBuffer(0), module(0),
+    nativeWindow(window), buffer(0), previousBuffer(0), //module(0),
     bits(NULL)
 {
-    hw_module_t const* pModule;
+    //hw_module_t const* pModule;
     pixelFormatTable = gglGetPixelFormatTable();
     
 	nativeWindow->query(nativeWindow, NATIVE_WINDOW_WIDTH, &width);
@@ -360,8 +360,8 @@ egl_window_surface_v2_t::~egl_window_surface_v2_t() {
 EGLBoolean egl_window_surface_v2_t::connect() 
 {
     // we're intending to do software rendering
-    native_window_set_usage(nativeWindow, 
-            GRALLOC_USAGE_SW_READ_OFTEN | GRALLOC_USAGE_SW_WRITE_OFTEN);
+    //native_window_set_usage(nativeWindow, 
+    //        GRALLOC_USAGE_SW_READ_OFTEN | GRALLOC_USAGE_SW_WRITE_OFTEN);
 
     // dequeue a buffer
     if (nativeWindow->dequeueBuffer(nativeWindow, &buffer) != NO_ERROR) {
@@ -384,8 +384,7 @@ EGLBoolean egl_window_surface_v2_t::connect()
     // Lock the buffer
     nativeWindow->lockBuffer(nativeWindow, buffer);
     // pin the buffer down
-    if (lock(buffer, GRALLOC_USAGE_SW_READ_OFTEN | 
-            GRALLOC_USAGE_SW_WRITE_OFTEN, &bits) != NO_ERROR) {
+    if (lock(buffer, 0, &bits) != NO_ERROR) {
         printf("connect() failed to lock buffer %p (%ux%u)", buffer, buffer->width, buffer->height);
         return setError(EGL_BAD_ACCESS, EGL_FALSE);
         // FIXME: we should make sure we're not accessing the buffer anymore
@@ -479,7 +478,7 @@ EGLBoolean egl_window_surface_v2_t::swapBuffers()
             if (!copyBack.isEmpty()) {
                 void* prevBits;
                 if (lock(previousBuffer, 
-                        GRALLOC_USAGE_SW_READ_OFTEN, &prevBits) == NO_ERROR) {
+                        0, &prevBits) == NO_ERROR) {
                     // copy from previousBuffer to buffer
                     copyBlt(buffer, bits, previousBuffer, prevBits, copyBack);
                     unlock(previousBuffer);
@@ -529,8 +528,7 @@ EGLBoolean egl_window_surface_v2_t::swapBuffers()
         //buffer->common.incRef(&buffer->common);
 
         // finally pin the buffer down
-        if (lock(buffer, GRALLOC_USAGE_SW_READ_OFTEN |
-                GRALLOC_USAGE_SW_WRITE_OFTEN, &bits) != NO_ERROR) {
+        if (lock(buffer, 0, &bits) != NO_ERROR) {
             //ALOGE("eglSwapBuffers() failed to lock buffer %p (%ux%u)",
             //        buffer, buffer->width, buffer->height);
             return setError(EGL_BAD_ACCESS, EGL_FALSE);

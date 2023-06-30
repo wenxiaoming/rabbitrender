@@ -25,8 +25,8 @@
 
 #include <time.h>
 
-#include <pixelflinger/pixelflinger.h>
-#include <private/pixelflinger/ggl_context.h>
+#include "pixelflinger.h"
+#include "ggl_context.h"
 
 #include "buffer.h"
 #include "clear.h"

@@ -23,7 +23,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <cutils/memory.h>
+#include "memory.h"
 //#include <cutils/log.h>
 
 #include "buffer.h"

@@ -13,7 +13,7 @@
 #include "EsUtilWin.h"
 #include "Framebuffer.h"
 #include <EGL/egl.h>
-#include <ui/egl/android_natives.h>
+#include "android_natives.h"
 
 #define NUM_FRAME_BUFFERS 2
 

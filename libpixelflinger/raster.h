@@ -19,7 +19,7 @@
 #ifndef ANDROID_GGL_RASTER_H
 #define ANDROID_GGL_RASTER_H
 
-#include <private/pixelflinger/ggl_context.h>
+#include "ggl_context.h"
 
 namespace android {
 

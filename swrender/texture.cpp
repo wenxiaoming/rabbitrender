@@ -27,7 +27,7 @@
 #include "texture.h"
 #include "TextureObjectManager.h"
 
-#include <private/ui/android_natives_priv.h>
+#include "android_natives.h"
 #include <ETC1/etc1.h>
 
 namespace android {
@@ -132,6 +132,7 @@ void ogles_lock_textures(ogles_context_t* c)
             texture_unit_t& u(c->textures.tmu[i]);
             ANativeWindowBuffer* native_buffer = u.texture->buffer;
             if (native_buffer) {
+#if 0
                 c->rasterizer.procs.activeTexture(c, i);
                 hw_module_t const* pModule;
 
@@ -146,6 +147,7 @@ void ogles_lock_textures(ogles_context_t* c)
 
                 u.texture->setImageBits(vaddr);
                 c->rasterizer.procs.bindTexture(c, &(u.texture->surface));
+#endif
             }
         }
     }
@@ -158,6 +160,7 @@ void ogles_unlock_textures(ogles_context_t* c)
             texture_unit_t& u(c->textures.tmu[i]);
             ANativeWindowBuffer* native_buffer = u.texture->buffer;
             if (native_buffer) {
+#if 0
                 c->rasterizer.procs.activeTexture(c, i);
                 hw_module_t const* pModule;
 
@@ -167,6 +170,7 @@ void ogles_unlock_textures(ogles_context_t* c)
                 module->unlock(module, native_buffer->handle);
                 u.texture->setImageBits(NULL);
                 c->rasterizer.procs.bindTexture(c, &(u.texture->surface));
+#endif
             }
         }
     }

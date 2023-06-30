@@ -19,6 +19,6 @@
 //1>d:\sdk\windows\v6.0\include\winscard.h(47) : error C2373: 'LPCVOID' : redefinition; different type modifiers
 //1>d:\sdk\windows\v6.0\include\windef.h(170) : see declaration of 'LPCVOID'
 
-#include <private/opengles/gl_context.h>
+#include "gl_context.h"
 
 using namespace android::gl;

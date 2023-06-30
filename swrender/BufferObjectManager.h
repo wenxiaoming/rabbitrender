@@ -31,7 +31,7 @@
 
 #include "Tokenizer.h"
 #include "TokenManager.h"
-
+#include "atomic.h"
 
 namespace android {
 
