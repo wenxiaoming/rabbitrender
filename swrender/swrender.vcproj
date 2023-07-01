@@ -120,7 +120,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../include/gles;../pthreads/include;../include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;SWRENDER_EXPORTS;HAVE_MS_C_RUNTIME;HAVE_PTHREADS;_USE_MATH_DEFINES;EGL_EGLEXT_PROTOTYPES;GL_GLEXT_PROTOTYPES"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;SWRENDER_EXPORTS;HAVE_MS_C_RUNTIME;HAVE_PTHREADS;_USE_MATH_DEFINES;EGL_EGLEXT_PROTOTYPES;GL_GLEXT_PROTOTYPES;HAVE_STRUCT_TIMESPEC;HAVE_LRINT"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
