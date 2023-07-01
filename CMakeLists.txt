@@ -6,10 +6,6 @@ add_subdirectory("compiler/frontend")
 # include directories
 include_directories(${CMAKE_INCLUDE_PATH})
 include_directories("include")
-include_directories("include/system/core/include")
-include_directories("include/frameworks/base/include")
-include_directories("include/hardware/libhardware/include")
-include_directories("include/frameworks/base/native/include")
 include_directories("include/gles")
 
 # initial variables

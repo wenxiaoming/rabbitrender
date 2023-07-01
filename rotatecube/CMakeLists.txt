@@ -21,22 +21,10 @@ endif ()
 
 file(GLOB_RECURSE HEADERS "${PROJECT_SOURCE_DIR}/../include/*"
                           "${PROJECT_SOURCE_DIR}/../pthreads/include"
-                          "${PROJECT_SOURCE_DIR}/../frameworks/base/include"
-                          "${PROJECT_SOURCE_DIR}/../hardware/libhardware/include"
-                          "${PROJECT_SOURCE_DIR}/../frameworks/base/native/include"
-                          "${PROJECT_SOURCE_DIR}/../system/core/include"
                           "${PROJECT_SOURCE_DIR}/windisplay")
 
 include_directories("${PROJECT_SOURCE_DIR}/../include")
 include_directories("${PROJECT_SOURCE_DIR}/../pthreads/include")
-include_directories("${PROJECT_SOURCE_DIR}/../include/frameworks/base/include")
-
-include_directories("${PROJECT_SOURCE_DIR}/../include/hardware/libhardware/include")
-include_directories("${PROJECT_SOURCE_DIR}/../include/frameworks/base/native/include")
-
-include_directories("/home/kevin/all/mygithub/rabbitrender/include/frameworks/base/include")
-
-include_directories("${PROJECT_SOURCE_DIR}/../include/system/core/include")
 
 include_directories("${PROJECT_SOURCE_DIR}/../windisplay")
 

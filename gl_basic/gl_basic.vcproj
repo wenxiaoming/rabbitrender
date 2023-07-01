@@ -43,7 +43,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../include;../pthreads/include;../include/gles;../include/frameworks/base/include;../include/hardware/libhardware/include;../include/frameworks/base/native/include;../include/system/core/include;../windisplay"
+				AdditionalIncludeDirectories="../include;../pthreads/include;../include/gles;../windisplay"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;HAVE_MS_C_RUNTIME"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -120,7 +120,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../include;../../pthreads/include;../../include;../../frameworks/base/include;../../hardware/libhardware/include;../../frameworks/base/native/include;../../system/core/include;../win32_render"
+				AdditionalIncludeDirectories="../include;../pthreads/include;../include/gles;../windisplay"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;HAVE_MS_C_RUNTIME"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -196,7 +196,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../include;../pthreads/include;../include/gles;../include/frameworks/base/include;../include/hardware/libhardware/include;../include/frameworks/base/native/include;../include/system/core/include;../windisplay"
+				AdditionalIncludeDirectories="../include;../pthreads/include;../include/gles;../windisplay"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;HAVE_MS_C_RUNTIME"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
