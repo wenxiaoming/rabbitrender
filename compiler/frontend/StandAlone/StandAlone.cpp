@@ -64,6 +64,10 @@
 // Build-time generated includes
 #include "glslang/build_info.h"
 
+#ifdef BUILD_SHADER_LIBRARY
+#include "Compiler.h"
+#endif
+
 extern "C" {
     GLSLANG_EXPORT void ShOutputHtml();
 }
@@ -1377,6 +1381,7 @@ int singleMain()
     return 0;
 }
 
+#ifndef BUILD_SHADER_LIBRARY
 int C_DECL main(int argc, char* argv[])
 {
     ProcessArguments(WorkItems, argc, argv);
@@ -1395,6 +1400,7 @@ int C_DECL main(int argc, char* argv[])
 
     return ret;
 }
+#endif
 
 //
 //   Deduce the language from the filename.  Files must end in one of the
@@ -1526,6 +1532,64 @@ void CompileFile(const char* fileName, ShHandle compiler)
         CompileFailed = true;
 }
 
+#ifdef BUILD_SHADER_LIBRARY
+void CompileShader(const char* shaderString, const std::string& ShaderTypeName)
+{
+    ShInitialize();
+    ShInitialize();  // also test reference counting of users
+    ShFinalize();    // also test reference counting of users
+
+    int ret = 0;
+#if 0
+    char* shaderString;
+
+    if ((Options & EOptionStdin) != 0) {
+        std::istreambuf_iterator<char> begin(std::cin), end;
+        std::string tempString(begin, end);
+        shaderString = strdup(tempString.c_str());
+    } else {
+        shaderString = ReadFileData(fileName);
+    }
+#endif
+
+    int Options = 0;
+    ShHandle compiler = ShConstructCompiler(FindLanguage(ShaderTypeName, false), Options);
+    if (compiler == 0)
+        return;
+    // move to length-based strings, rather than null-terminated strings
+    int* lengths = new int[1];
+    lengths[0] = (int)strlen(shaderString);
+
+    EShMessages messages = EShMsgDefault;
+    SetMessageOptions(messages);
+
+    if (UserPreamble.isSet())
+        Error("-D and -U options require -l (linking)\n");
+
+    for (int i = 0; i < ((Options & EOptionMemoryLeakMode) ? 100 : 1); ++i) {
+        for (int j = 0; j < ((Options & EOptionMemoryLeakMode) ? 100 : 1); ++j) {
+            // ret = ShCompile(compiler, shaderStrings, NumShaderStrings, lengths, EShOptNone, &Resources, Options, (Options & EOptionDefaultDesktop) ? 110 : 100, false, messages);
+            ret = ShCompile(compiler, &shaderString, 1, nullptr, EShOptNone, &Resources, Options, (Options & EOptionDefaultDesktop) ? 110 : 100, false, messages);
+            // const char* multi[12] = { "# ve", "rsion", " 300 e", "s", "\n#err",
+            //                         "or should be l", "ine 1", "string 5\n", "float glo", "bal",
+            //                         ";\n#error should be line 2\n void main() {", "global = 2.3;}" };
+            // const char* multi[7] = { "/", "/", "\\", "\n", "\n", "#", "version 300 es" };
+            // ret = ShCompile(compiler, multi, 7, nullptr, EShOptNone, &Resources, Options, (Options & EOptionDefaultDesktop) ? 110 : 100, false, messages);
+        }
+
+        if (Options & EOptionMemoryLeakMode)
+            glslang::OS_DumpMemoryCounters();
+    }
+
+    delete [] lengths;
+    //FreeFileData(shaderString);
+
+    if (ret == 0)
+        CompileFailed = true;
+
+    ShFinalize();
+}
+#endif
 //
 //   print usage to stdout
 //

@@ -31,6 +31,64 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+if(BUILD_SHADER_LIBRARY)
+
+add_library(glslang-default-resource-limits
+            ${CMAKE_CURRENT_SOURCE_DIR}/ResourceLimits.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/resource_limits_c.cpp)
+set_property(TARGET glslang-default-resource-limits PROPERTY FOLDER glslang)
+set_property(TARGET glslang-default-resource-limits PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+target_include_directories(glslang-default-resource-limits
+                           PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+                           PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>)
+
+add_library(glslang-compiler
+            ${CMAKE_CURRENT_SOURCE_DIR}/StandAlone.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/DirStackFileIncluder.h)
+
+add_definitions(-DBUILD_SHADER_LIBRARY)
+
+target_include_directories(glslang-compiler
+                           PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+                           PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>)
+
+set(SOURCES StandAlone.cpp DirStackFileIncluder.h)
+
+set(LIBRARIES
+    glslang
+    SPIRV
+    glslang-default-resource-limits)
+
+if(ENABLE_SPVREMAPPER)
+    set(LIBRARIES ${LIBRARIES} SPVRemapper)
+endif()
+
+if(WIN32)
+    set(LIBRARIES ${LIBRARIES} psapi)
+elseif(UNIX)
+    if(NOT ANDROID)
+        set(LIBRARIES ${LIBRARIES} pthread)
+    endif()
+endif(WIN32)
+
+target_link_libraries(glslang-compiler ${LIBRARIES})
+target_include_directories(glslang-compiler PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../External>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/External>)
+
+if(ENABLE_OPT)
+    target_include_directories(glslang-compiler
+        PRIVATE ${spirv-tools_SOURCE_DIR}/include
+    )
+endif(ENABLE_OPT)
+
+if(WIN32)
+    source_group("Source" FILES ${SOURCES})
+endif(WIN32)
+
+else()
+
 add_library(glslang-default-resource-limits
             ${CMAKE_CURRENT_SOURCE_DIR}/ResourceLimits.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/resource_limits_c.cpp)
@@ -104,3 +162,5 @@ if(ENABLE_GLSLANG_INSTALL)
         install(EXPORT glslang-default-resource-limitsTargets DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake)
     endif()
 endif(ENABLE_GLSLANG_INSTALL)
+
+endif()

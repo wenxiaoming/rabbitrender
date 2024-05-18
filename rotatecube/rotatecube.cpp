@@ -20,6 +20,8 @@
 #include <math.h>
 #include <stdlib.h>
 
+#include "shader_api.h"
+
 #ifndef _MSC_VER
 #include </usr/include/unistd.h>
 #endif
@@ -220,6 +222,24 @@ int main(int argc, char **argv) {
         printf("GL initialisation failed - exiting\n");
         return 0;
     }
+
+    const char *vertex_shader = R"(
+    attribute vec4 vertexPosition;
+
+    uniform mat4 modelMatrix;
+    uniform mat4 viewMatrix;
+    uniform mat4 projectionMatrix;
+
+    void main() {
+        gl_Position =
+            projectionMatrix * viewMatrix * modelMatrix * vertexPosition;
+    })";
+
+
+    int shader = swrender::CreateShader(swrender::ShaderType::VERTEX_SHADER);
+    int ret = swrender::ShaderSource(shader, std::string(vertex_shader));
+    ret = swrender::CompilerShader(shader);
+
     init_scene();
     // create_texture();
     printf("Running...\n");
@@ -247,6 +267,7 @@ int init_gl_surface(void) {
         printf("printEGLConfigurations failed.\n");
         return 0;
     }
+
 
     mESContext = new ESContext;
     mESContext->context = NULL;

@@ -45,6 +45,8 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # Enable compile commands database
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+set(BUILD_SHADER_LIBRARY ON)
+
 # Adhere to GNU filesystem layout conventions
 include(GNUInstallDirs)
 
@@ -316,9 +318,11 @@ endif()
 
 add_subdirectory(glslang)
 add_subdirectory(OGLCompilersDLL)
-if(ENABLE_GLSLANG_BINARIES)
+
+#if(ENABLE_GLSLANG_BINARIES)
     add_subdirectory(StandAlone)
-endif()
+#endif()
+
 add_subdirectory(SPIRV)
 if(ENABLE_HLSL)
     #add_subdirectory(hlsl)

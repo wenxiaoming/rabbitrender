@@ -7,6 +7,7 @@ add_subdirectory("compiler/frontend")
 include_directories(${CMAKE_INCLUDE_PATH})
 include_directories("include")
 include_directories("include/gles")
+include_directories("compiler/frontend/StandAlone")
 
 # initial variables
 add_definitions(-DGL_GLEXT_PROTOTYPES)
@@ -32,6 +33,7 @@ if(MSVC)
   add_definitions(-DGL_GLEXT_PROTOTYPES)
   add_definitions(-DHAVE_STRUCT_TIMESPEC)
   add_definitions(-DHAVE_LRINT)
+  add_definitions(-DBUILD_SHADER_LIBRARY)
 
   # regeneration does not work well with msbuild custom rules.
   set(CMAKE_SUPPRESS_REGENERATION ON)

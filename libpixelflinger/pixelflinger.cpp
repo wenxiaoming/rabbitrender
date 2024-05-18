@@ -77,7 +77,8 @@ static void ggl_enable_texture2d(context_t* c, int enable);
 static void ggl_enable_w_lerp(context_t* c, int enable);
 static void ggl_enable_fog(context_t* c, int enable);
 
-#ifndef _MSC_VER
+//#ifndef _MSC_VER
+#if 1
 static inline int min(int a, int b) CONST;
 static inline int min(int a, int b) {
     return a < b ? a : b;
