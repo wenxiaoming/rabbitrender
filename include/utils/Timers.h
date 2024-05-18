@@ -25,6 +25,7 @@
 //#include <sys/time.h>
 #ifdef _MSC_VER
 #include <windows.h>
+#include <winsock.h>
 #endif
 #include "../libpixelflinger/gettimeofday.h"
 // ------------------------------------------------------------------

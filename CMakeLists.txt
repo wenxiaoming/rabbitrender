@@ -12,8 +12,10 @@ include_directories("include/gles")
 add_definitions(-DGL_GLEXT_PROTOTYPES)
 add_definitions(-DEGL_EGLEXT_PROTOTYPES)
 add_definitions(-DHAVE_PTHREADS)
-add_definitions(-DHAVE_POSIX_CLOCKS)
 
+if(NOT MSVC)
+add_definitions(-DHAVE_POSIX_CLOCKS)
+endif()
 # Generic compilation options
 if(MSVC)
   add_definitions(-DWIN32_LEAN_AND_MEAN)
@@ -21,6 +23,16 @@ if(MSVC)
   add_definitions(-D_SCL_SECURE_NO_WARNINGS)
   add_definitions(-D_ENABLE_EXTENDED_ALIGNED_STORAGE)
   add_definitions(-DNOMINMAX)
+  #add_definitions(-DWIN64)
+  add_definitions(-DSWRENDER_EXPORTS)
+  add_definitions(-DHAVE_MS_C_RUNTIME)
+  add_definitions(-DHAVE_PTHREADS)
+  add_definitions(-D_USE_MATH_DEFINES)
+  add_definitions(-DEGL_EGLEXT_PROTOTYPES)
+  add_definitions(-DGL_GLEXT_PROTOTYPES)
+  add_definitions(-DHAVE_STRUCT_TIMESPEC)
+  add_definitions(-DHAVE_LRINT)
+
   # regeneration does not work well with msbuild custom rules.
   set(CMAKE_SUPPRESS_REGENERATION ON)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
@@ -49,6 +61,7 @@ if(MSVC)
   add_compile_options(/wd4180)
   # DLL interface warning in c++
   add_compile_options(/wd4251)
+  include_directories("pthreads/include")
 else(MSVC)
   set(WARNING_FLAG -Wall)
   if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
@@ -88,18 +101,30 @@ file(GLOB_RECURSE COMPILER_SRCS
 file(GLOB_RECURSE WINDOWS_SRCS 
     libpixelflinger/gettimeofday.cpp)
 
+if(NOT MSVC)
 list(REMOVE_ITEM COMPILER_SRCS ${WINDOWS_SRCS})
+endif()
 
 file(GLOB SWRNDER_SRCS
     swrender/*.cpp
     )
 
+if(MSVC)
+file(GLOB WINRENDER_SRCS
+    windisplay/EGLUtils.cpp
+    windisplay/Framebuffer.cpp
+    windisplay/EsUtilWin.cpp
+    windisplay/FramebufferWin.cpp
+    )
+else()
 file(GLOB WINRENDER_SRCS
     windisplay/EGLUtils.cpp
     windisplay/FramebufferSDL.cpp
     windisplay/EsUtilSDL.cpp
     windisplay/Framebuffer.cpp
     )
+endif()
+
 
 list(APPEND COMPILER_SRCS ${SWRNDER_SRCS})
 
@@ -116,20 +141,32 @@ else()
   set(CMAKE_CUDA_STANDARD 14)
 endif()
 
+if(NOT MSVC)
 set(CMAKE_CXX_FLAGS "-g -v ${CMAKE_CXX_FLAGS}")
+endif()
 
 message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 
 message(STATUS "COMPILER_SRCS: ${COMPILER_SRCS}")
 
-add_library(rabbitrender_objs OBJECT ${COMPILER_SRCS})
-
-add_library(rabbitrender SHARED $<TARGET_OBJECTS:rabbitrender_objs>)
-
-target_compile_definitions(rabbitrender_objs PUBLIC "NDEBUG")
-
+#add_library(rabbitrender_objs OBJECT ${COMPILER_SRCS})
+if(NOT MSVC)
+add_library(rabbitrender SHARED ${COMPILER_SRCS})
+else()
+add_library(rabbitrender STATIC ${COMPILER_SRCS})
+endif()
+#target_compile_definitions(rabbitrender_objs PUBLIC "NDEBUG")
+if(NOT MSVC)
 target_link_libraries(rabbitrender PUBLIC gcc)
+endif()
+
+if(MSVC)
+link_directories(${CMAKE_SOURCE_DIR}/pthreads/lib)
+target_link_libraries(rabbitrender PUBLIC pthreadVC2)
+endif()
 
 add_subdirectory("gl_basic")
 add_subdirectory("particle")
 add_subdirectory("rotatecube")
+
+add_subdirectory("third_party/llvm-10.0")

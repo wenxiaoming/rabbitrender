@@ -14,6 +14,7 @@
 
 set(LLVM_DIR ${CMAKE_CURRENT_SOURCE_DIR}/llvm)
 set(LLVM_CONFIG_DIR ${CMAKE_CURRENT_SOURCE_DIR}/configs)
+set(ARCH "x86")
 
 set(LLVM_LIST
     ${LLVM_DIR}/lib/Analysis/AliasAnalysis.cpp

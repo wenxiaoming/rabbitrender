@@ -1,6 +1,7 @@
 #define WIN32_LEAN_AND_MEAN
 #ifdef _MSC_VER
 #include <windows.h>
+#include <WinUser.h>
 #endif
 #include <stdio.h>
 //#include "esUtil.h"
@@ -22,8 +23,14 @@ static LRESULT WINAPI ESWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam,
         // if ( esContext && esContext->drawFunc )
         //   esContext->drawFunc ( esContext );
 
+#ifdef _WIN64
         ESContext *esContext =
+            (ESContext *)(LONG_PTR)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+#else
+         ESContext *esContext =
             (ESContext *)(LONG_PTR)GetWindowLongPtr(hWnd, GWL_USERDATA);
+ #endif
+
         if (esContext && esContext->context && esContext->drawFunc) {
             esContext->drawFunc(esContext->context);
         }
@@ -89,7 +96,12 @@ static HWND WinCreate(const char *title, int width, int height,
 
     // Set the ESContext* to the GWL_USERDATA so that it is available to the
     // ESWindowProc
+
+#ifdef _WIN64
+    SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG)(LONG_PTR)context);
+#else
     SetWindowLongPtr(hWnd, GWL_USERDATA, (LONG)(LONG_PTR)context);
+#endif
 
     if (hWnd == NULL)
         return NULL;

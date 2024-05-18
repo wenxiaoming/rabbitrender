@@ -23,6 +23,7 @@
 #include "TextureObjectManager.h"
 
 #include "android_natives.h"
+#include "utils.h"
 
 namespace android {
 // ----------------------------------------------------------------------------
@@ -72,12 +73,6 @@ void EGLTextureObject::copyParameters(const sp<EGLTextureObject>& old)
     direct = old->direct;
 }
 
-#ifndef _MSC_VER
-static int max(int a, int b) {
-    return a<b ? b : a;
-}
-#endif
-
 status_t EGLTextureObject::allocateMipmaps()
 {
     // here, by construction, mMipmaps=0 && mNumExtraLod=0
@@ -113,12 +108,6 @@ void EGLTextureObject::freeMipmaps()
         mNumExtraLod = 0;
     }
 }
-
-#ifndef _MSC_VER
-static int min(int a, int b) {
-    return a<b ? a : b;
-}
-#endif
 
 const GGLSurface& EGLTextureObject::mip(int lod) const
 {

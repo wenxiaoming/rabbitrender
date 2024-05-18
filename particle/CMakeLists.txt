@@ -33,8 +33,15 @@ file(GLOB_RECURSE SRCS "${PROJECT_SOURCE_DIR}/*.cpp")
 message(STATUS "SRCS: ${SRCS}")
 message(STATUS "HEADERS: ${HEADERS}")
 
+if(NOT MSVC)
 link_directories("/home/kevin/all/mygithub/build")
+endif()
 
 add_executable(${PROJ_EXEC_NAME} ${SRCS})
 
+if(MSVC)
+link_directories(${CMAKE_SOURCE_DIR}/pthreads/lib)
+target_link_libraries(${PROJ_EXEC_NAME} rabbitrender pthreadVC2 rabbitrender)
+else()
 target_link_libraries(${PROJ_EXEC_NAME} rabbitrender SDL2 pthread dl m c z)
+endif()

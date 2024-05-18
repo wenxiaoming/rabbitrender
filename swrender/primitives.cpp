@@ -29,6 +29,7 @@
 #include "vertex.h"
 #include "fp.h"
 #include "TextureObjectManager.h"
+#include  "utils.h"
 
 #ifdef _MSC_VER
 #include "internal.h"
@@ -39,33 +40,12 @@ extern "C" void iterators0032(const void* that,
 
 namespace android {
 
-#ifndef _MSC_VER
-static inline int min(int a, int b) CONST;
-static inline int max(int a, int b) CONST;
-static inline int min(int a, int b, int c) CONST;
-static inline int max(int a, int b, int c) CONST;
-#endif
-
 // ----------------------------------------------------------------------------
 #if 0
 #pragma mark -
 #pragma mark Tools
 #endif
 
-#ifndef _MSC_VER
-inline int min(int a, int b) {
-    return a<b ? a : b;
-}
-inline int max(int a, int b) {
-    return a<b ? b : a;
-}
-inline int min(int a, int b, int c) {
-    return min(a,min(b,c));
-}
-inline int max(int a, int b, int c) {
-    return max(a,max(b,c));
-}
-#endif
 // ----------------------------------------------------------------------------
 
 static void primitive_point(ogles_context_t* c, vertex_t* v);
@@ -1165,6 +1145,5 @@ unsigned int clip_line(ogles_context_t* c, vertex_t* s, vertex_t* p)
 
     return 2;
 }
-
 
 }; // namespace android
