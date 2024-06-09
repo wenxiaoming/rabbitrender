@@ -41,6 +41,8 @@
 #include "localintermediate.h"
 #include "../Include/InfoSink.h"
 
+#include "intermOut.h"
+
 #ifdef _MSC_VER
 #include <cfloat>
 #else
@@ -82,6 +84,7 @@ bool IsNan(double x) {
 
 namespace glslang {
 
+#if 0
 //
 // Two purposes:
 // 1.  Show an example of how to iterate tree.  Functions can
@@ -122,6 +125,8 @@ protected:
 
     EExtraOutput extraOutput;
 };
+
+#endif
 
 //
 // Helper functions for printing, not part of traversing.

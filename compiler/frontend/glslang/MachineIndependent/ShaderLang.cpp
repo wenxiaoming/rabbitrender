@@ -49,6 +49,7 @@
 #include "ParseHelper.h"
 #include "Scan.h"
 #include "ScanContext.h"
+#include "intermOut.h"
 
 #ifdef ENABLE_HLSL
 #include "../HLSL/hlslParseHelper.h"
@@ -1499,6 +1500,12 @@ int ShCompile(
     //
     if (success && intermediate.getTreeRoot() && optLevel != EShOptNoGeneration)
         success = compiler->compile(intermediate.getTreeRoot(), intermediate.getVersion(), intermediate.getProfile());
+
+    TInfoSink infoSink;
+    infoSink.debug.setOutputStream(EStdOut);
+    TOutputTraverser outputTraverser(infoSink);
+
+    intermediate.getTreeRoot()->traverse(&outputTraverser);
 
     intermediate.removeTree();
 
