@@ -14,6 +14,7 @@ else()
   set(OS_IOS TRUE)
 endif()
 
+add_subdirectory("compiler/shader")
 add_subdirectory("compiler/frontend")
 add_subdirectory("base")
 
