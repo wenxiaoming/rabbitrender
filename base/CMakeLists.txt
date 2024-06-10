@@ -133,7 +133,11 @@ file(GLOB_RECURSE BASE_SRCS
     time/time_point.h    
     command_line.cc     
     #trace_event.cc     
-    #trace_event.h     
+    #trace_event.h
+    half.cpp
+    half.h
+    math_base.h
+    math_base.cpp
     unique_fd.cc     
     unique_fd.h     
     unique_object.h     
