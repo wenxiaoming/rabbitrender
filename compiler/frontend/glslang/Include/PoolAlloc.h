@@ -254,6 +254,14 @@ extern TPoolAllocator& GetThreadPoolAllocator();
 void SetThreadPoolAllocator(TPoolAllocator* poolAllocator);
 
 //
+// There could potentially be many pools with pops happening at
+// different times.  But a simple use is to have a global pop
+// with everyone using the same global allocator.
+//
+extern TPoolAllocator* GetGlobalPoolAllocator();
+extern void SetGlobalPoolAllocator(TPoolAllocator* poolAllocator);
+
+//
 // This STL compatible allocator is intended to be used as the allocator
 // parameter to templatized STL containers, like vector and map.
 //

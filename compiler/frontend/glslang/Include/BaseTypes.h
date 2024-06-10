@@ -41,37 +41,130 @@
 
 namespace glslang {
 
+    //
+// Precision qualifiers
 //
-// Basic type.  Arrays, vectors, sampler details, etc., are orthogonal to this.
+enum TPrecision : unsigned char {
+    // These need to be kept sorted
+    EbpUndefined,
+    EbpLow,
+    EbpMedium,
+    EbpHigh
+};
+
+inline const char *getPrecisionString(TPrecision precision) {
+    switch (precision) {
+    case EbpHigh:
+        return "highp";
+        break;
+    case EbpMedium:
+        return "mediump";
+        break;
+    case EbpLow:
+        return "lowp";
+        break;
+    default:
+        return "mediump";
+        break; // Safest fallback
+    }
+}
 //
-enum TBasicType {
+// Basic type.  Arrays, vectors, etc., are orthogonal to this.
+//
+enum TBasicType : unsigned char {
     EbtVoid,
     EbtFloat,
+    EbtInt,
+    EbtUInt,
+    EbtBool,
+    EbtGVec4,             // non type: represents vec4, ivec4, and uvec4
+    EbtGenType,           // non type: represents float, vec2, vec3, and vec4
+    EbtGenIType,          // non type: represents int, ivec2, ivec3, and ivec4
+    EbtGenUType,          // non type: represents uint, uvec2, uvec3, and uvec4
+    EbtGenBType,          // non type: represents bool, bvec2, bvec3, and bvec4
+    EbtVec,               // non type: represents vec2, vec3, and vec4
+    EbtIVec,              // non type: represents ivec2, ivec3, and ivec4
+    EbtUVec,              // non type: represents uvec2, uvec3, and uvec4
+    EbtBVec,              // non type: represents bvec2, bvec3, and bvec4
+    EbtGuardSamplerBegin, // non type: see implementation of IsSampler()
+    EbtSampler2D,
+    EbtSampler3D,
+    EbtSamplerCube,
+    EbtSampler2DArray,
+    EbtSampler2DRect,      // Only valid if ARB_texture_rectangle exists.
+    EbtSamplerExternalOES, // Only valid if OES_EGL_image_external exists.
+    EbtISampler2D,
+    EbtISampler3D,
+    EbtISamplerCube,
+    EbtISampler2DArray,
+    EbtUSampler2D,
+    EbtUSampler3D,
+    EbtUSamplerCube,
+    EbtUSampler2DArray,
+    EbtSampler2DShadow,
+    EbtSamplerCubeShadow,
+    EbtSampler2DArrayShadow,
+    EbtGuardSamplerEnd, // non type: see implementation of IsSampler()
+    EbtGSampler2D, // non type: represents sampler2D, isampler2D, and usampler2D
+    EbtGSampler3D, // non type: represents sampler3D, isampler3D, and usampler3D
+    EbtGSamplerCube,    // non type: represents samplerCube, isamplerCube, and
+                        // usamplerCube
+    EbtGSampler2DArray, // non type: represents sampler2DArray, isampler2DArray,
+                        // and usampler2DArray
+    EbtStruct,
+    EbtInterfaceBlock,
+    EbtAddress,  // should be deprecated??
+    EbtInvariant, // used as a type when qualifying a previously declared
+                 // variable as being invariant
+    EbtUint8,
+    EbtUint16,
+    EbtUint,
+    EbtUint64,
     EbtDouble,
     EbtFloat16,
     EbtInt8,
-    EbtUint8,
     EbtInt16,
-    EbtUint16,
-    EbtInt,
-    EbtUint,
     EbtInt64,
-    EbtUint64,
-    EbtBool,
-    EbtAtomicUint,
-    EbtSampler,
-    EbtStruct,
-    EbtBlock,
-    EbtAccStruct,
-    EbtReference,
-    EbtRayQuery,
-
-    // HLSL types that live only temporarily.
-    EbtString,
-
-    EbtNumTypes
+    EbtSampler
 };
 
+inline bool IsSampler(TBasicType type) {
+    return type > EbtGuardSamplerBegin && type < EbtGuardSamplerEnd;
+}
+
+inline bool IsInteger(TBasicType type) {
+    return type == EbtInt || type == EbtUInt;
+}
+
+inline const char *getBasicString(TBasicType type) {
+    switch (type) {
+    case EbtVoid:
+        return "void";
+    case EbtFloat:
+        return "float";
+    case EbtInt:
+        return "int";
+    case EbtUInt:
+        return "uint";
+    case EbtBool:
+        return "bool";
+    case EbtSampler2D:
+        return "sampler2D";
+    case EbtSamplerCube:
+        return "samplerCube";
+    case EbtSampler2DRect:
+        return "sampler2DRect";
+    case EbtSamplerExternalOES:
+        return "samplerExternalOES";
+    case EbtSampler3D:
+        return "sampler3D";
+    case EbtStruct:
+        return "structure";
+    default:
+        //UNREACHABLE(type);
+        return "unknown type";
+    }
+}
 //
 // Storage qualifiers.  Should align with different kinds of storage or
 // resource or GLSL storage qualifier.  Expansion is deprecated.
@@ -124,6 +217,21 @@ enum TStorageQualifier {
 
     // end of list
     EvqLast
+};
+
+enum TLayoutMatrixPacking
+{
+	EmpUnspecified,
+	EmpRowMajor,
+	EmpColumnMajor
+};
+
+enum TLayoutBlockStorage
+{
+	EbsUnspecified,
+	EbsShared,
+	EbsPacked,
+	EbsStd140
 };
 
 //
@@ -314,8 +422,7 @@ __inline const char* GetStorageQualifierString(TStorageQualifier q) { return "";
 __inline const char* GetPrecisionQualifierString(TPrecisionQualifier p) { return ""; }
 #else
 // These will show up in error messages
-__inline const char* GetStorageQualifierString(TStorageQualifier q)
-{
+__inline const char *GetStorageQualifierString(TStorageQualifier q) {
     switch (q) {
     case EvqTemporary:      return "temp";           break;
     case EvqGlobal:         return "global";         break;
@@ -505,10 +612,10 @@ __inline const char* GetPrecisionQualifierString(TPrecisionQualifier p)
 __inline bool isTypeSignedInt(TBasicType type)
 {
     switch (type) {
-    case EbtInt8:
-    case EbtInt16:
+    //case EbtInt8:
+    //case EbtInt16:
     case EbtInt:
-    case EbtInt64:
+    //case EbtInt64:
         return true;
     default:
         return false;
@@ -571,6 +678,29 @@ __inline int getTypeRank(TBasicType type)
     }
     return res;
 }
+
+struct TLayoutQualifier
+{
+	static TLayoutQualifier create()
+	{
+		TLayoutQualifier layoutQualifier;
+
+		layoutQualifier.location = -1;
+		layoutQualifier.matrixPacking = EmpUnspecified;
+		layoutQualifier.blockStorage = EbsUnspecified;
+
+		return layoutQualifier;
+	}
+
+	bool isEmpty() const
+	{
+		return location == -1 && matrixPacking == EmpUnspecified && blockStorage == EbsUnspecified;
+	}
+
+	int location;
+	TLayoutMatrixPacking matrixPacking;
+	TLayoutBlockStorage blockStorage;
+};
 
 } // end namespace glslang
 

@@ -1729,6 +1729,12 @@ enum TVisit
     EvPostVisit
 };
 
+enum Visit
+{
+	PreVisit,
+	InVisit,
+	PostVisit
+};
 //
 // For traversing the tree.  User should derive from this,
 // put their traversal specific data in it, and then pass
@@ -1764,13 +1770,13 @@ public:
 
     virtual void visitSymbol(TIntermSymbol*)               { }
     virtual void visitConstantUnion(TIntermConstantUnion*) { }
-    virtual bool visitBinary(TVisit, TIntermBinary*)       { return true; }
-    virtual bool visitUnary(TVisit, TIntermUnary*)         { return true; }
-    virtual bool visitSelection(TVisit, TIntermSelection*) { return true; }
-    virtual bool visitAggregate(TVisit, TIntermAggregate*) { return true; }
-    virtual bool visitLoop(TVisit, TIntermLoop*)           { return true; }
-    virtual bool visitBranch(TVisit, TIntermBranch*)       { return true; }
-    virtual bool visitSwitch(TVisit, TIntermSwitch*)       { return true; }
+    virtual bool visitBinary(Visit, TIntermBinary*)       { return true; }
+    virtual bool visitUnary(Visit, TIntermUnary*)         { return true; }
+    virtual bool visitSelection(Visit, TIntermSelection*) { return true; }
+    virtual bool visitAggregate(Visit, TIntermAggregate*) { return true; }
+    virtual bool visitLoop(Visit, TIntermLoop*)           { return true; }
+    virtual bool visitBranch(Visit, TIntermBranch*)       { return true; }
+    virtual bool visitSwitch(Visit, TIntermSwitch*)       { return true; }
 
     int getMaxDepth() const { return maxDepth; }
 

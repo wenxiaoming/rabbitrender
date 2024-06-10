@@ -23,8 +23,6 @@ add_library(${BUILD_SHARED_LIB_NAME} STATIC ${SHADER_SOURCES} ${SHADER_HEADERS})
 set_property(TARGET ${BUILD_SHARED_LIB_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
 set_property(TARGET ${BUILD_SHARED_LIB_NAME} PROPERTY FOLDER glslang)
 
-#target_include_directories(MachineIndependent PUBLIC "G:/from_20230429/rabbitrender/include/gles")
-
 # Root directory for build-time generated include files
 set(GLSLANG_GENERATED_INCLUDEDIR "${CMAKE_BINARY_DIR}/include")
 

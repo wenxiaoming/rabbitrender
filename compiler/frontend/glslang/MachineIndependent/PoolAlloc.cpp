@@ -65,6 +65,17 @@ bool InitializePoolIndex()
     return true;
 }
 
+TPoolAllocator* GetGlobalPoolAllocator()
+{
+	assert(PoolIndex != OS_INVALID_TLS_INDEX);
+	return static_cast<TPoolAllocator*>(OS_GetTLSValue(PoolIndex));
+}
+
+void SetGlobalPoolAllocator(TPoolAllocator* poolAllocator)
+{
+	assert(PoolIndex != OS_INVALID_TLS_INDEX);
+	OS_SetTLSValue(PoolIndex, poolAllocator);
+}
 //
 // Implement the functionality of the TPoolAllocator class, which
 // is documented in PoolAlloc.h.

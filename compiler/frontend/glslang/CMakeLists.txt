@@ -76,6 +76,7 @@ set(MACHINEINDEPENDENT_SOURCES
     MachineIndependent/SymbolTable.cpp
     MachineIndependent/Versions.cpp
     MachineIndependent/intermOut.cpp
+    MachineIndependent/OutputASM.cpp
     MachineIndependent/limits.cpp
     MachineIndependent/linkValidate.cpp
     MachineIndependent/parseConst.cpp
@@ -130,6 +131,11 @@ if(ENABLE_HLSL)
         HLSL/hlslParseables.h)
 endif(ENABLE_HLSL)
 
+
+include_directories("${PROJECT_SOURCE_DIR}/../../include")
+include_directories("${PROJECT_SOURCE_DIR}/../../include/gles")
+include_directories("${PROJECT_SOURCE_DIR}/../../compiler/shader")
+include_directories("${PROJECT_SOURCE_DIR}/../../base")
 add_library(MachineIndependent STATIC ${MACHINEINDEPENDENT_SOURCES} ${MACHINEINDEPENDENT_HEADERS})
 set_property(TARGET MachineIndependent PROPERTY POSITION_INDEPENDENT_CODE ON)
 set_property(TARGET MachineIndependent PROPERTY FOLDER glslang)
