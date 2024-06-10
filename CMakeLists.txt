@@ -1,7 +1,21 @@
 cmake_minimum_required(VERSION 3.2)
 project(rabbitrender C CXX)
 
+
+if(UNIX)
+	message("current platform: Linux ")
+  set(OS_LINUX TRUE)
+elseif(WIN32)
+	message("current platform: Windows ")
+  set(OS_WIN TRUE)
+else()
+	message("current platform: mac or ios ")
+  set(OS_WIN TRUE)
+  set(OS_IOS TRUE)
+endif()
+
 add_subdirectory("compiler/frontend")
+add_subdirectory("base")
 
 # include directories
 include_directories(${CMAKE_INCLUDE_PATH})
